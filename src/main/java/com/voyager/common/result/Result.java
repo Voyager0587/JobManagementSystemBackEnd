@@ -1,6 +1,7 @@
 package com.voyager.common.result;
 
 import com.voyager.common.constant.ResultEnum;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 /**
@@ -12,12 +13,15 @@ import lombok.Data;
 public class Result<T> {
 
     // 操作代码
+    @Schema(description = "操作代码")
     Integer code;
 
     // 提示信息
+    @Schema(description = "提示信息")
     String message;
 
     // 结果数据
+    @Schema(description = "结果数据")
     T data;
 
     public Result(ResultEnum resultCode) {
