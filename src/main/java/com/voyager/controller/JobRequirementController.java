@@ -55,9 +55,9 @@ public class JobRequirementController {
      */
     @Operation(summary = "根据职位名称和公司ID查询JobRequirement记录")
     @GetMapping("/find")
-    @Parameter(description = "职位名称")
-    @Parameter(description = "公司ID")
-    public Result<JobRequirement> findJobRequirementByNameAndCompanyId(@RequestParam String jobName, @RequestParam int companyId) {
+    @Parameter(name = "jobName", description = "职位名称")
+    @Parameter(name = "companyId", description = "公司ID")
+    public Result<JobRequirement> findJobRequirementByNameAndCompanyId( String jobName,  int companyId) {
         JobRequirement jobRequirement = jobRequirementService.findJobRequirementByNameAndCompanyId(jobName, companyId);
         return Result.success(jobRequirement);
     }
@@ -70,7 +70,7 @@ public class JobRequirementController {
      * @param numberRequired 更新后的需求人数
      * @return 包装更新操作影响的行数的Result对象
      */
-    @Operation(summary = "更新JobRequirement的number_required字段")
+    @Operation(summary = "更新职位需求人数")
     @PutMapping("/update/numberRequired")
     @Parameter(description = "职位名称")
     @Parameter(description = "公司ID")
@@ -88,7 +88,7 @@ public class JobRequirementController {
      * @param jobDescription 更新后的职位描述
      * @return 包装更新操作影响的行数的Result对象
      */
-    @Operation(summary = "更新JobRequirement的job_description字段")
+    @Operation(summary = "更新职位描述")
     @PutMapping("/update/description")
     @Parameter(description = "职位名称")
     @Parameter(description = "公司ID")
@@ -97,4 +97,6 @@ public class JobRequirementController {
         jobRequirementService.updateJobRequirementDescription(jobName, companyId, jobDescription);
         return Result.success("职位描述更新成功");
     }
+
+
 }

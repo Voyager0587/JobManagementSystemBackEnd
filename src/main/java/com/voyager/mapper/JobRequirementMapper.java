@@ -30,7 +30,7 @@ public interface JobRequirementMapper {
      * @return 对应的JobRequirement对象
      */
     @Select("SELECT * FROM jobrequirement WHERE job_name = #{jobName} AND company_id = #{companyId}")
-    JobRequirement findJobRequirementByNameAndCompanyId(@Param("jobName") String jobName, @Param("companyId") int companyId);
+    JobRequirement findJobRequirementByNameAndCompanyId( String jobName, int companyId);
 
     /**
      * 更新JobRequirement的number_required字段

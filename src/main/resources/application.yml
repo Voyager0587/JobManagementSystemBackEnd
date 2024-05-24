@@ -8,7 +8,6 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 20040317Li
-
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -39,3 +38,7 @@ knife4j:
     enable-version: true
     enable-swagger-models: true
     swagger-model-name: 服务模块
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
