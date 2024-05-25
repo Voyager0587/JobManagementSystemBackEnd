@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 公司接口
+ *
  * @author Voyager
  * @date 2024/05/25
  */
@@ -26,6 +27,7 @@ public class CompanyController {
 
     /**
      * 插入新的公司记录
+     *
      * @param company Company对象
      * @return 包装插入操作影响的行数的Result对象
      */
@@ -38,6 +40,7 @@ public class CompanyController {
 
     /**
      * 根据公司名称删除公司记录
+     *
      * @param companyName 公司名称
      * @return 包装删除操作影响的行数的Result对象
      */
@@ -51,6 +54,7 @@ public class CompanyController {
 
     /**
      * 根据公司名称查询公司
+     *
      * @param companyName 公司名称
      * @return 包装对应的Company对象的Result对象
      */
@@ -64,8 +68,9 @@ public class CompanyController {
 
     /**
      * 更新公司的联系人信息
-     * @param companyName 公司名称
-     * @param contactName 联系人姓名
+     *
+     * @param companyName  公司名称
+     * @param contactName  联系人姓名
      * @param contactPhone 联系人电话
      * @return 包装更新操作影响的行数的Result对象
      */
@@ -78,8 +83,9 @@ public class CompanyController {
 
     /**
      * 更新公司的网址
+     *
      * @param companyName 公司名称
-     * @param website 公司网址
+     * @param website     公司网址
      * @return 包装更新操作影响的行数的Result对象
      */
     @Operation(summary = "更新公司的网址")
@@ -97,7 +103,6 @@ public class CompanyController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询公司信息")
-    @Parameter(name = "companyPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(CompanyPageQueryDTO companyPageQueryDTO) {
         return Result.success(companyService.pageQuery(companyPageQueryDTO));
     }

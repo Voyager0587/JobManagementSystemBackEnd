@@ -100,7 +100,6 @@ public class UserController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询用户信息")
-    @Parameter(name = "userPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(UserPageQueryDTO userPageQueryDTO) {
         return Result.success(userService.pageQuery(userPageQueryDTO));
     }

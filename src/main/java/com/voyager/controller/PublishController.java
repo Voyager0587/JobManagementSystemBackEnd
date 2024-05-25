@@ -103,7 +103,6 @@ public class PublishController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询发布信息")
-    @Parameter(name = "publishPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(PublishPageQueryDTO publishPageQueryDTO) {
         return Result.success(publishService.pageQuery(publishPageQueryDTO));
     }

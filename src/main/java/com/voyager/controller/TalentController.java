@@ -115,7 +115,6 @@ public class TalentController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询人才信息")
-    @Parameter(name = "talentPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(TalentPageQueryDTO talentPageQueryDTO) {
         return Result.success(talentService.pageQuery(talentPageQueryDTO));
     }

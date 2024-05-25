@@ -115,7 +115,6 @@ public class ResponsiblePersonController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询负责人信息")
-    @Parameter(name = "responsiblePersonPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO) {
         return Result.success(responsiblePersonService.pageQuery(responsiblePersonPageQueryDTO));
     }

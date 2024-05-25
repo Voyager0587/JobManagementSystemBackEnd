@@ -142,7 +142,6 @@ public class ApplicationReviewController {
      */
     @GetMapping("/page")
     @Operation(summary = "分页查询申请信息")
-    @Parameter(name = "applicationReviewPageQueryDTO", description = "分页查询参数")
     public Result<PageResult> page(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO
     ) {
         log.info("菜品分页查询:{}", applicationReviewPageQueryDTO);
