@@ -1,5 +1,10 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import com.voyager.mapper.ApplicationReviewMapper;
 import com.voyager.service.ApplicationReviewService;
@@ -38,6 +43,13 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
 
     public void deleteByApplyId(int applyId) {
          applicationReviewMapper.deleteByApplyId(applyId);
+    }
+
+    @Override
+    public PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO) {
+        PageHelper.startPage(applicationReviewPageQueryDTO.getPageIndex(), applicationReviewPageQueryDTO.getPageSize());
+        Page<ApplicationReview> page = applicationReviewMapper.selectByCriteria(applicationReviewPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 
     public void deleteByJobId(int jobId) {

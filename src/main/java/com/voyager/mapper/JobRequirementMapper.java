@@ -1,4 +1,6 @@
 package com.voyager.mapper;
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.JobRequirementPageQueryDTO;
 import com.voyager.domain.pojo.JobRequirement;
 import org.apache.ibatis.annotations.*;
 
@@ -51,4 +53,7 @@ public interface JobRequirementMapper {
      */
     @Update("UPDATE jobrequirement SET job_description = #{jobDescription} WHERE job_name = #{jobName} AND company_id = #{companyId}")
     int updateJobRequirementDescription(@Param("jobName") String jobName, @Param("companyId") int companyId, @Param("jobDescription") String jobDescription);
+
+    Page<JobRequirement> selectByCriteria(JobRequirementPageQueryDTO jobRequirementPageQueryDTO);
+
 }

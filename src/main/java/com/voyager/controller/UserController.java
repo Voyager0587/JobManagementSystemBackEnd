@@ -1,6 +1,8 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.UserPageQueryDTO;
 import com.voyager.domain.pojo.User;
 import com.voyager.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 用户接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "用户接口")
 @RestController
 @RequestMapping("/api/user")
@@ -83,5 +90,18 @@ public class UserController {
     public Result<String> deleteByUserId(@PathVariable int userId) {
         userService.deleteByUserId(userId);
         return Result.success("删除成功");
+    }
+
+    /**
+     * 分页查询用户信息
+     *
+     * @param userPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询用户信息")
+    @Parameter(name = "userPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(UserPageQueryDTO userPageQueryDTO) {
+        return Result.success(userService.pageQuery(userPageQueryDTO));
     }
 }

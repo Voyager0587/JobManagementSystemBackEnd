@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import org.apache.ibatis.annotations.*;
 
@@ -77,5 +79,14 @@ public interface ApplicationReviewMapper {
      */
     @Delete("DELETE FROM ApplicationReview WHERE job_id = #{jobId}")
     void deleteByJobId(int jobId);
+
+
+    /**
+     * 根据输入参数查询
+     *
+     * @return {@link Page }<{@link ApplicationReview }>
+     */
+    Page<ApplicationReview> selectByCriteria(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO
+    );
 }
 

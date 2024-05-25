@@ -19,5 +19,21 @@
         </set>
         WHERE apply_id = #{applyId}
     </update>
+    <select id="selectByCriteria" resultType="com.voyager.domain.pojo.ApplicationReview">
+        SELECT * FROM ApplicationReview
+        <where>
+            <if test="reviewStatus != null">
+                AND review_status = #{reviewStatus}
+            </if>
+            <if test="jobId != null">
+                AND job_id = #{jobId}
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                AND id_number = #{idNumber}
+            </if>
+        </where>
+        order by apply_id desc
+
+    </select>
 </mapper>
 

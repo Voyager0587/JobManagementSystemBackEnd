@@ -1,6 +1,9 @@
 package com.voyager.service;
 
 
+import com.github.pagehelper.PageInfo;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 
 import java.util.List;
@@ -14,4 +17,6 @@ public interface ApplicationReviewService {
      void insert(ApplicationReview applicationReview) ;
      void update(ApplicationReview applicationReview) ;
      void deleteByApplyId(int applyId);
+    PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO);
+
 }

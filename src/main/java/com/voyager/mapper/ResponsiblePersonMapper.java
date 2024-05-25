@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import org.apache.ibatis.annotations.*;
 
@@ -56,4 +58,11 @@ public interface ResponsiblePersonMapper {
      */
     @Delete("DELETE FROM responsibleperson WHERE person_id = #{personId}")
     int deleteById(int personId);
+
+    /**
+     * 根据条件查询ResponsiblePerson记录
+     * @param responsiblePersonPageQueryDTO 查询条件
+     * @return {@link Page }<{@link ResponsiblePerson }>
+     */
+    Page<ResponsiblePerson> selectByCriteria(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO);
 }

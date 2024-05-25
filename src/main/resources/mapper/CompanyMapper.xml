@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.voyager.mapper.CompanyMapper">
+
+    <select id="selectByCriteria" resultType="com.voyager.domain.pojo.Company">
+        SELECT * FROM Company
+        <where>
+            <if test="companyName != null and companyName != ''">
+                AND company_name LIKE CONCAT('%', #{companyName}, '%')
+            </if>
+        </where>
+        ORDER BY company_name ASC
+    </select>
+</mapper>

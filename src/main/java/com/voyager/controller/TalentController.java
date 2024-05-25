@@ -1,6 +1,8 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.TalentPageQueryDTO;
 import com.voyager.domain.pojo.Talent;
 import com.voyager.service.TalentService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 人才信息接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "人才信息接口")
 @RestController
 @RequestMapping("/api/talent")
@@ -97,5 +104,19 @@ public class TalentController {
     public Result<Talent> findByUserId(@PathVariable int userId) {
         Talent talent = talentService.findByUserId(userId);
         return Result.success(talent);
+    }
+
+
+    /**
+     * 分页查询人才信息
+     *
+     * @param talentPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询人才信息")
+    @Parameter(name = "talentPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(TalentPageQueryDTO talentPageQueryDTO) {
+        return Result.success(talentService.pageQuery(talentPageQueryDTO));
     }
 }

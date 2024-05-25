@@ -1,5 +1,8 @@
 package com.voyager.controller;
+
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.PublishPageQueryDTO;
 import com.voyager.domain.pojo.Publish;
 import com.voyager.service.PublishService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -10,6 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 发布接口
+ *
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "发布接口")
 @RestController
 @RequestMapping("/api/publish")
@@ -17,6 +26,7 @@ public class PublishController {
 
     @Autowired
     private PublishService publishService;
+
     /**
      * 根据职位ID查询发布信息
      *
@@ -85,4 +95,16 @@ public class PublishController {
         return Result.success("删除成功");
     }
 
+    /**
+     * 分页查询发布信息
+     *
+     * @param publishPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询发布信息")
+    @Parameter(name = "publishPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(PublishPageQueryDTO publishPageQueryDTO) {
+        return Result.success(publishService.pageQuery(publishPageQueryDTO));
+    }
 }

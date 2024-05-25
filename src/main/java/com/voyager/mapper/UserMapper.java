@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.UserPageQueryDTO;
 import com.voyager.domain.pojo.User;
 import org.apache.ibatis.annotations.*;
 
@@ -45,4 +47,11 @@ public interface UserMapper {
      */
     @Delete("DELETE FROM User WHERE user_id = #{userId}")
     int deleteByUserId(int userId);
+
+    /**
+     * 根据条件查询User记录
+     * @param userPageQueryDTO 查询条件
+     * @return {@link Page }<{@link User }>
+     */
+    Page<User> selectByCriteria(UserPageQueryDTO userPageQueryDTO);
 }

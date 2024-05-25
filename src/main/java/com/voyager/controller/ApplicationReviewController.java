@@ -1,19 +1,28 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import com.voyager.service.ApplicationReviewService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 申请审核接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "申请审核接口")
 @RestController
 @RequestMapping("/api/application-review")
+@Slf4j
 public class ApplicationReviewController {
     @Autowired
     private ApplicationReviewService applicationReviewService;
@@ -40,8 +49,7 @@ public class ApplicationReviewController {
     @Operation(summary = "根据职位ID查询审核和申请")
     @Parameter(name = "jobId", description = "职位ID")
     @GetMapping("/job/{jobId}")
-    public
-    Result<List<ApplicationReview>> findByJobId(@PathVariable int jobId) {
+    public Result<List<ApplicationReview>> findByJobId(@PathVariable int jobId) {
         return Result.success(applicationReviewService.findByJobId(jobId));
     }
 
@@ -54,8 +62,7 @@ public class ApplicationReviewController {
     @Operation(summary = "根据身份证号查询申请信息")
     @Parameter(name = "idNumber", description = "身份证号")
     @GetMapping("/idNumber/{idNumber}")
-    public
-    Result<List<ApplicationReview>> findByIdNumber(@PathVariable String idNumber) {
+    public Result<List<ApplicationReview>> findByIdNumber(@PathVariable String idNumber) {
         return Result.success(applicationReviewService.findByIdNumber(idNumber));
     }
 
@@ -125,6 +132,21 @@ public class ApplicationReviewController {
     public Result<String> deleteByJobId(@PathVariable int jobId) {
         applicationReviewService.deleteByJobId(jobId);
         return Result.success("删除成功");
+    }
+
+    /**
+     * 分页查询申请信息
+     *
+     * @param applicationReviewPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询申请信息")
+    @Parameter(name = "applicationReviewPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO
+    ) {
+        log.info("菜品分页查询:{}", applicationReviewPageQueryDTO);
+        return Result.success(applicationReviewService.pageQuery(applicationReviewPageQueryDTO));
     }
 
 

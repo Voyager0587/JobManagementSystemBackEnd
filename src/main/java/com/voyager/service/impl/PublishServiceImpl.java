@@ -1,5 +1,9 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.PublishPageQueryDTO;
 import com.voyager.domain.pojo.Publish;
 import com.voyager.mapper.PublishMapper;
 import com.voyager.service.PublishService;
@@ -37,5 +41,11 @@ public class PublishServiceImpl implements PublishService {
     @Override
     public int deleteByPublishId(int publishId) {
         return publishMapper.deleteByPublishId(publishId);
+    }
+    @Override
+    public PageResult pageQuery(PublishPageQueryDTO publishPageQueryDTO) {
+        PageHelper.startPage(publishPageQueryDTO.getPageIndex(), publishPageQueryDTO.getPageSize());
+        Page<Publish> page = publishMapper.selectByCriteria(publishPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

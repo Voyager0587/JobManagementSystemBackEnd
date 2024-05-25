@@ -1,6 +1,8 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.CompanyPageQueryDTO;
 import com.voyager.domain.pojo.Company;
 import com.voyager.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 公司接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "公司接口")
 @RestController
 @RequestMapping("/api/company")
@@ -80,5 +87,18 @@ public class CompanyController {
     public Result<String> updateCompanyWebsite(@RequestParam String companyName, @RequestParam String website) {
         companyService.updateCompanyWebsite(companyName, website);
         return Result.success("网址更新成功");
+    }
+
+    /**
+     * 分页查询公司信息
+     *
+     * @param companyPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询公司信息")
+    @Parameter(name = "companyPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(CompanyPageQueryDTO companyPageQueryDTO) {
+        return Result.success(companyService.pageQuery(companyPageQueryDTO));
     }
 }

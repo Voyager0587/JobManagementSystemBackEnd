@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.TalentPageQueryDTO;
 import com.voyager.domain.pojo.Talent;
 import org.apache.ibatis.annotations.*;
 
@@ -57,4 +59,6 @@ public interface TalentMapper {
      */
     @Select("SELECT * FROM Talent WHERE user_id = #{userId}")
     Talent findByUserId(int userId);
+
+    Page<Talent> selectByCriteria(TalentPageQueryDTO talentPageQueryDTO);
 }

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.voyager.mapper.ResponsiblePersonMapper">
+
+    <select id="selectByCriteria" resultType="com.voyager.domain.pojo.ResponsiblePerson">
+        SELECT * FROM ResponsiblePerson
+        <where>
+            <if test="companyId != null">
+                AND company_id = #{companyId}
+            </if>
+            <if test="name != null and name != ''">
+                AND name LIKE CONCAT('%', #{name}, '%')
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                AND phone_number LIKE CONCAT('%', #{phoneNumber}, '%')
+            </if>
+        </where>
+        ORDER BY person_id DESC
+    </select>
+</mapper>

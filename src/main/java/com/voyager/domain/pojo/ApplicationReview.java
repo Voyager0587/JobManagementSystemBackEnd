@@ -1,5 +1,6 @@
 package com.voyager.domain.pojo;
 
+import com.github.pagehelper.PageInfo;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -57,4 +58,5 @@ public class ApplicationReview {
      */
     @Schema(description = "关联的职位ID")
     private Integer jobId;
+
 }

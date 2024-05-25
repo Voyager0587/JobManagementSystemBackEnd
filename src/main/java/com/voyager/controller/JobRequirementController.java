@@ -1,6 +1,8 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.JobRequirementPageQueryDTO;
 import com.voyager.domain.pojo.JobRequirement;
 import com.voyager.service.JobRequirementService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -9,6 +11,11 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * 职位需求接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "职位需求接口")
 @RestController
 @RequestMapping("/api/jobrequirement")
@@ -98,5 +105,15 @@ public class JobRequirementController {
         return Result.success("职位描述更新成功");
     }
 
-
+    /**
+     * 分页查询职位需求信息
+     *
+     * @param jobRequirementPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询职位需求信息")
+    public Result<PageResult> page(JobRequirementPageQueryDTO jobRequirementPageQueryDTO) {
+        return Result.success(jobRequirementService.pageQuery(jobRequirementPageQueryDTO));
+    }
 }

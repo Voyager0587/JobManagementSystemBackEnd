@@ -1,6 +1,8 @@
 package com.voyager.controller;
 
+import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.service.ResponsiblePersonService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -11,6 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * 负责人接口
+ * @author Voyager
+ * @date 2024/05/25
+ */
 @Tag(name = "负责人接口")
 @RestController
 @RequestMapping("/api/responsibleperson")
@@ -98,5 +105,18 @@ public class ResponsiblePersonController {
     public Result<String> deleteById(@PathVariable int personId) {
         responsiblePersonService.deleteById(personId);
         return Result.success("删除成功");
+    }
+
+    /**
+     * 分页查询负责人信息
+     *
+     * @param responsiblePersonPageQueryDTO 分页查询参数
+     * @return {@link Result }<{@link PageResult }>
+     */
+    @GetMapping("/page")
+    @Operation(summary = "分页查询负责人信息")
+    @Parameter(name = "responsiblePersonPageQueryDTO", description = "分页查询参数")
+    public Result<PageResult> page(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO) {
+        return Result.success(responsiblePersonService.pageQuery(responsiblePersonPageQueryDTO));
     }
 }

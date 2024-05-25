@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.CompanyPageQueryDTO;
 import com.voyager.domain.pojo.Company;
 import org.apache.ibatis.annotations.*;
 
@@ -49,4 +51,11 @@ public interface CompanyMapper {
      */
     @Update("UPDATE company SET website = #{website} WHERE company_name = #{companyName}")
     int updateCompanyWebsite(@Param("companyName") String companyName, @Param("website") String website);
+
+    /**
+     * 根据条件查询公司
+     * @param companyPageQueryDTO 查询条件
+     * @return {@link Page }<{@link Company }>
+     */
+    Page<Company> selectByCriteria(CompanyPageQueryDTO companyPageQueryDTO);
 }

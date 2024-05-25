@@ -1,5 +1,9 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.mapper.ResponsiblePersonMapper;
 import com.voyager.service.ResponsiblePersonService;
@@ -42,5 +46,12 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
     @Override
     public int deleteById(int personId) {
         return responsiblePersonMapper.deleteById(personId);
+    }
+
+    @Override
+    public PageResult pageQuery(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO) {
+        PageHelper.startPage(responsiblePersonPageQueryDTO.getPageIndex(), responsiblePersonPageQueryDTO.getPageSize());
+        Page<ResponsiblePerson> page = responsiblePersonMapper.selectByCriteria(responsiblePersonPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

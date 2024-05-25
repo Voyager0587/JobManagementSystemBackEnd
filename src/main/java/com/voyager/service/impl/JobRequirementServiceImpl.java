@@ -1,5 +1,9 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.JobRequirementPageQueryDTO;
 import com.voyager.domain.pojo.JobRequirement;
 import com.voyager.mapper.JobRequirementMapper;
 import com.voyager.service.JobRequirementService;
@@ -35,5 +39,12 @@ public class JobRequirementServiceImpl implements JobRequirementService {
     @Override
     public int updateJobRequirementDescription(String jobName, int companyId, String jobDescription) {
         return jobRequirementMapper.updateJobRequirementDescription(jobName, companyId, jobDescription);
+    }
+
+    @Override
+    public PageResult pageQuery(JobRequirementPageQueryDTO jobRequirementPageQueryDTO) {
+        PageHelper.startPage(jobRequirementPageQueryDTO.getPageIndex(), jobRequirementPageQueryDTO.getPageSize());
+        Page<JobRequirement> page = jobRequirementMapper.selectByCriteria(jobRequirementPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

@@ -1,5 +1,9 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.UserPageQueryDTO;
 import com.voyager.domain.pojo.User;
 import com.voyager.mapper.UserMapper;
 import com.voyager.service.UserService;
@@ -35,5 +39,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public int deleteByUserId(int userId) {
         return userMapper.deleteByUserId(userId);
+    }
+
+    @Override
+    public PageResult pageQuery(UserPageQueryDTO userPageQueryDTO) {
+        PageHelper.startPage(userPageQueryDTO.getPageIndex(), userPageQueryDTO.getPageSize());
+        Page<User> page = userMapper.selectByCriteria(userPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

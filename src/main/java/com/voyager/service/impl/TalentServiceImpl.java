@@ -1,5 +1,9 @@
 package com.voyager.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.TalentPageQueryDTO;
 import com.voyager.domain.pojo.Talent;
 import com.voyager.mapper.TalentMapper;
 import com.voyager.service.TalentService;
@@ -40,5 +44,12 @@ public class TalentServiceImpl implements TalentService {
     @Override
     public Talent findByUserId(int userId) {
         return talentMapper.findByUserId(userId);
+    }
+
+    @Override
+    public PageResult pageQuery(TalentPageQueryDTO talentPageQueryDTO) {
+        PageHelper.startPage(talentPageQueryDTO.getPageIndex(), talentPageQueryDTO.getPageSize());
+        Page<Talent> page = talentMapper.selectByCriteria(talentPageQueryDTO);
+        return new PageResult(page.getTotal(), page.getResult());
     }
 }

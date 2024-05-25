@@ -1,5 +1,7 @@
 package com.voyager.mapper;
 
+import com.github.pagehelper.Page;
+import com.voyager.domain.dto.PublishPageQueryDTO;
 import com.voyager.domain.pojo.Publish;
 import org.apache.ibatis.annotations.*;
 
@@ -52,4 +54,11 @@ public interface PublishMapper {
      */
     @Delete("DELETE FROM Publish WHERE publish_id = #{publishId}")
     int deleteByPublishId(int publishId);
+
+    /**
+     * 分页查询发布信息
+     * @param publishPageQueryDTO 分页查询参数
+     * @return {@link Page }<{@link Publish }>
+     */
+    Page<Publish> selectByCriteria(PublishPageQueryDTO publishPageQueryDTO);
 }
