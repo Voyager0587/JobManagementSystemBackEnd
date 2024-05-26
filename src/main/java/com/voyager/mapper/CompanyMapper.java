@@ -13,8 +13,8 @@ public interface CompanyMapper {
      * @param company Company对象，包含需要插入的数据
      * @return 插入操作影响的行数
      */
-    @Insert("INSERT INTO company (company_id, company_name, company_intro, contact_name, contact_phone, email, address, website) " +
-            "VALUES (null, #{companyName}, #{companyIntro}, #{contactName}, #{contactPhone}, #{email}, #{address}, #{website})")
+    @Insert("INSERT INTO company ( company_name, company_intro, contact_name, contact_phone, email, address, website) " +
+            "VALUES (#{companyName}, #{companyIntro}, #{contactName}, #{contactPhone}, #{email}, #{address}, #{website})")
     int insertCompany(Company company);
 
     /**

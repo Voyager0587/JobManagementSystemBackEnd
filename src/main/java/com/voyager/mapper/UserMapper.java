@@ -14,7 +14,7 @@ public interface UserMapper {
      * @return 对应的User对象
      */
     @Select("SELECT * FROM User WHERE user_id = #{userId}")
-    User findByUserId(int userId);
+    User findByUserId(Long userId);
 
     /**
      * 根据用户名查询用户

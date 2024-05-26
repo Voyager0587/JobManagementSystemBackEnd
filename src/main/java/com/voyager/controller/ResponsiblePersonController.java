@@ -1,17 +1,28 @@
 package com.voyager.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.voyager.common.constant.JwtClaimsConstant;
 import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
-import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
+import com.voyager.domain.dto.*;
 import com.voyager.domain.pojo.ResponsiblePerson;
+import com.voyager.domain.pojo.User;
+import com.voyager.domain.vo.PersonLoginVO;
+import com.voyager.domain.vo.UserLoginVO;
 import com.voyager.service.ResponsiblePersonService;
+import com.voyager.service.UserService;
+import com.voyager.utills.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 负责人接口
@@ -25,6 +36,52 @@ public class ResponsiblePersonController {
 
     @Autowired
     private ResponsiblePersonService responsiblePersonService;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    @Autowired
+    private UserService userService;
+
+
+    /**
+     * 登录
+     * @param personLoginDTO
+     * @return {@link Result }<{@link PersonLoginVO }>
+     */
+    @PostMapping("/login")
+    @Operation(summary = "登录")
+    public Result<PersonLoginVO> login(@RequestBody PersonLoginDTO personLoginDTO){
+        ResponsiblePerson responsiblePerson = responsiblePersonService.login(personLoginDTO);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.USER_ID, responsiblePerson.getUserId());
+        //获取impl中user对象，对比密码，之后查询是否有相关talent
+        String token = jwtUtils.generateToken(claims, "user");
+        User user = userService.findByUserId(responsiblePerson.getUserId());
+        // 将用户信息存储在Redis中
+        String userJson = JSONUtil.toJsonStr(user);
+        stringRedisTemplate.opsForValue().set("login:user:" + user.getUserId(), userJson, 30, TimeUnit.MINUTES);
+        PersonLoginVO personLoginVO = PersonLoginVO.builder()
+                .id(responsiblePerson.getUserId())
+                .name(responsiblePerson.getName())
+                .token(token)
+                .build();
+        return Result.success(personLoginVO);
+    }
+
+    /**
+     * 注册
+     *
+     * @return 包装插入操作结果的Result对象
+     */
+    @Operation(summary = "注册")
+    @PostMapping("/register")
+    public Result<String> register(@RequestBody ResponsiblePersonRegisterDTO responsiblePersonRegisterDTO) {
+        if (responsiblePersonService.insert(responsiblePersonRegisterDTO) == 1) {
+            return Result.success("注册成功");
+        }
+        return Result.error("注册失败");
+    }
 
     /**
      * 根据负责人ID查询负责人信息
@@ -70,13 +127,13 @@ public class ResponsiblePersonController {
     /**
      * 添加新的负责人
      *
-     * @param responsiblePerson 新的负责人对象
+     * @param responsiblePersonRegisterDTO 新增负责人对象
      * @return 包装插入操作影响的行数的Result对象
      */
     @Operation(summary = "添加新的负责人")
     @PostMapping("/add")
-    public Result<String> insert(@RequestBody ResponsiblePerson responsiblePerson) {
-        responsiblePersonService.insert(responsiblePerson);
+    public Result<String> insert(@RequestBody ResponsiblePersonRegisterDTO responsiblePersonRegisterDTO) {
+        responsiblePersonService.insert(responsiblePersonRegisterDTO);
         return Result.success("添加成功");
     }
 

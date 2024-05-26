@@ -1,15 +1,31 @@
 package com.voyager.controller;
 
+import cn.hutool.json.JSONUtil;
+import com.voyager.common.constant.JwtClaimsConstant;
 import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.TalentPageQueryDTO;
+import com.voyager.domain.dto.TalentRegisterDTO;
+import com.voyager.domain.dto.UserLoginDTO;
+import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.Talent;
+import com.voyager.domain.pojo.User;
+import com.voyager.domain.vo.PersonLoginVO;
+import com.voyager.domain.vo.UserLoginVO;
 import com.voyager.service.TalentService;
+import com.voyager.service.UserService;
+import com.voyager.utills.JwtUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * 人才信息接口
@@ -23,6 +39,53 @@ public class TalentController {
 
     @Autowired
     private TalentService talentService;
+    @Autowired
+    private JwtUtils jwtUtils;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private UserService userService;
+
+
+    /**
+     * 登录
+     * @param personLoginDTO
+     * @return {@link Result }<{@link PersonLoginVO }>
+     */
+    @PostMapping("/login")
+    @Operation(summary = "登录")
+    public Result<PersonLoginVO> login(@RequestBody PersonLoginDTO personLoginDTO){
+        Talent talent = talentService.login(personLoginDTO);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put(JwtClaimsConstant.USER_ID, talent.getUserId());
+        //获取impl中user对象，对比密码，之后查询是否有相关talent
+        String token = jwtUtils.generateToken(claims, "user");
+        // 将用户信息存储在Redis中
+        User user = userService.findByUserId(talent.getUserId());
+        String userJson = JSONUtil.toJsonStr(user);
+        stringRedisTemplate.opsForValue().set("login:user:" + user.getUserId(), userJson, 30, TimeUnit.MINUTES);
+        PersonLoginVO personLoginVO = PersonLoginVO.builder()
+                .id(talent.getUserId())
+                .name(talent.getName())
+                .token(token)
+                .build();
+        return Result.success(personLoginVO);
+    }
+    /**
+     * 注册
+     *
+     * @return 包装插入操作结果的Result对象
+     */
+    @Operation(summary = "注册")
+    @PostMapping("/register")
+    public Result<String> register(@RequestBody TalentRegisterDTO talentRegisterDTO) {
+        if (talentService.insert(talentRegisterDTO) == 1) {
+            return Result.success("注册成功");
+        }
+        return Result.error("注册失败");
+    }
+
 
     /**
      * 添加人才信息

@@ -65,4 +65,9 @@ public interface ResponsiblePersonMapper {
      * @return {@link Page }<{@link ResponsiblePerson }>
      */
     Page<ResponsiblePerson> selectByCriteria(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO);
+
+    @Select("SELECT * FROM responsibleperson WHERE phone_number = #{phone}")
+    ResponsiblePerson findByPhone(String phone);
+
+
 }

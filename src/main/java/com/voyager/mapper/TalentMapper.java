@@ -13,9 +13,8 @@ public interface TalentMapper {
      * @param talent Talent对象，包含需要插入的数据
      * @return 插入操作影响的行数
      */
-    @Insert("INSERT INTO Talent (user_id, id_number, name, gender, birth_date, email, phone_number) " +
-            "SELECT #{u.user_id}, #{idNumber}, #{name}, #{gender}, #{birthDate}, #{email}, #{phoneNumber} " +
-            "FROM User u WHERE u.user_id = #{user_id}")
+    @Insert("INSERT INTO Talent (user_id, name, gender, birth_date, email, phone_number, id_number) " +
+            "VALUES (#{userId}, #{name}, #{gender}, #{birthDate}, #{email}, #{phoneNumber}, #{idNumber})")
     int insertTalent(Talent talent);
 
     /**
@@ -58,7 +57,10 @@ public interface TalentMapper {
      * @return 对应的Talent对象
      */
     @Select("SELECT * FROM Talent WHERE user_id = #{userId}")
-    Talent findByUserId(int userId);
+    Talent findByUserId(Long userId);
 
     Page<Talent> selectByCriteria(TalentPageQueryDTO talentPageQueryDTO);
+
+    @Select("SELECT * FROM Talent WHERE phone_number = #{phone}")
+    Talent findByPhone(String phone);
 }

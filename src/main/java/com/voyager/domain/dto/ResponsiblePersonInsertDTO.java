@@ -1,4 +1,4 @@
-package com.voyager.domain.pojo;
+package com.voyager.domain.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
@@ -15,13 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResponsiblePerson {
+public class ResponsiblePersonInsertDTO {
 
-    /**
-     * 负责人ID，自动递增
-     */
-    @Schema(description = "负责人ID，自动递增")
-    private Long personId;
 
     /**
      * 关联到 User 表的用户ID

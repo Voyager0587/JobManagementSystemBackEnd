@@ -8,6 +8,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: 20040317Li
+  data:
+    redis:
+      host: 10.33.72.249
+      port: 6379
+      password: 20040317LHG
+      database: 10
 springdoc:
   swagger-ui:
     path: /swagger-ui.html
@@ -45,3 +51,6 @@ mybatis:
   #mapper配置文件
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.voyager.domain.pojo
+jwt:
+  secret: 2we3e4we5w34 #密钥
+  expiration: 43200000 #过期时间 12h
