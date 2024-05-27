@@ -7,12 +7,9 @@ import com.voyager.common.result.Result;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.TalentPageQueryDTO;
 import com.voyager.domain.dto.TalentRegisterDTO;
-import com.voyager.domain.dto.UserLoginDTO;
-import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.Talent;
 import com.voyager.domain.pojo.User;
 import com.voyager.domain.vo.PersonLoginVO;
-import com.voyager.domain.vo.UserLoginVO;
 import com.voyager.service.TalentService;
 import com.voyager.service.UserService;
 import com.voyager.utills.JwtUtils;
@@ -29,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * 人才信息接口
+ *
  * @author Voyager
  * @date 2024/05/25
  */
@@ -50,12 +48,13 @@ public class TalentController {
 
     /**
      * 登录
+     *
      * @param personLoginDTO
      * @return {@link Result }<{@link PersonLoginVO }>
      */
     @PostMapping("/login")
     @Operation(summary = "登录")
-    public Result<PersonLoginVO> login(@RequestBody PersonLoginDTO personLoginDTO){
+    public Result<PersonLoginVO> login(@RequestBody PersonLoginDTO personLoginDTO) {
         Talent talent = talentService.login(personLoginDTO);
         Map<String, Object> claims = new HashMap<>();
         claims.put(JwtClaimsConstant.USER_ID, talent.getUserId());
@@ -72,6 +71,7 @@ public class TalentController {
                 .build();
         return Result.success(personLoginVO);
     }
+
     /**
      * 注册
      *
@@ -96,8 +96,10 @@ public class TalentController {
     @Operation(summary = "添加人才信息")
     @PostMapping("/add")
     public Result<String> addTalent(@RequestBody Talent talent) {
-        talentService.insertTalent(talent);
-        return Result.success("添加成功");
+        if (talentService.insertTalent(talent) == 1) {
+            return Result.success("添加成功");
+        }
+        return Result.error("添加失败");
     }
 
     /**
@@ -110,8 +112,10 @@ public class TalentController {
     @Parameter(name = "userId", description = "用户ID")
     @DeleteMapping("/delete/{userId}")
     public Result<String> deleteTalent(@PathVariable int userId) {
-        talentService.deleteByIdNumber(userId);
-        return Result.success("删除成功");
+        if (talentService.deleteByIdNumber(userId) == 1) {
+            return Result.success("删除成功");
+        }
+        return Result.error("删除失败");
     }
 
     /**
@@ -123,8 +127,9 @@ public class TalentController {
     @Operation(summary = "更新人才信息")
     @PutMapping("/update")
     public Result<String> updateTalent(@RequestBody Talent talent) {
-        talentService.updateTalent(talent);
-        return Result.success("更新成功");
+        if (talentService.updateTalent(talent) == 1)
+            return Result.success("更新成功");
+        return Result.error("更新失败");
     }
 
     /**

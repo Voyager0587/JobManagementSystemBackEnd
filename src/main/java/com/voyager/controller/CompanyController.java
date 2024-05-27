@@ -34,7 +34,7 @@ public class CompanyController {
     @Operation(summary = "注册公司")
     @PostMapping("/insert")
     public Result<String> insertCompany(@RequestBody Company company) {
-        if (companyService.insertCompany(company)==1){
+        if (companyService.insertCompany(company) == 1) {
             return Result.success("注册成功");
         }
         return Result.error("注册失败");
@@ -79,8 +79,9 @@ public class CompanyController {
     @Operation(summary = "更新公司的联系人信息")
     @PutMapping("/updateContact")
     public Result<String> updateCompanyContact(@RequestParam String companyName, @RequestParam String contactName, @RequestParam String contactPhone) {
-        companyService.updateCompanyContact(companyName, contactName, contactPhone);
-        return Result.success("联系人信息更新成功");
+        if (companyService.updateCompanyContact(companyName, contactName, contactPhone) == 1)
+            return Result.success("联系人信息更新成功");
+        return Result.error("联系人信息更新失败");
     }
 
     /**
@@ -93,8 +94,9 @@ public class CompanyController {
     @Operation(summary = "更新公司的网址")
     @PutMapping("/updateWebsite")
     public Result<String> updateCompanyWebsite(@RequestParam String companyName, @RequestParam String website) {
-        companyService.updateCompanyWebsite(companyName, website);
-        return Result.success("网址更新成功");
+        if (companyService.updateCompanyWebsite(companyName, website) == 1)
+            return Result.success("网址更新成功");
+        return Result.error("网址更新失败");
     }
 
     /**

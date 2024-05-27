@@ -1,21 +1,32 @@
 package com.voyager.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.ApplicationReviewDTO;
 import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
+import com.voyager.domain.dto.ApplicationReviewQueryDTO;
+import com.voyager.domain.dto.ApplicationReviewUpdateDTO;
 import com.voyager.domain.pojo.ApplicationReview;
+import com.voyager.domain.pojo.Talent;
 import com.voyager.mapper.ApplicationReviewMapper;
+import com.voyager.mapper.TalentMapper;
 import com.voyager.service.ApplicationReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 public class ApplicationReviewServiceImpl implements ApplicationReviewService {
     @Autowired
     private ApplicationReviewMapper applicationReviewMapper;
+    @Autowired
+    private TalentMapper talentMapper;
 
     public ApplicationReview findByApplyId(int applyId) {
         return applicationReviewMapper.findByApplyId(applyId);
@@ -33,26 +44,44 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
         return applicationReviewMapper.findByStatus(status);
     }
 
-    public void insert(ApplicationReview applicationReview) {
-        applicationReviewMapper.insert(applicationReview);
+    @Transactional
+    public int insert(ApplicationReviewDTO applicationReviewDTO) {
+        Talent talent = talentMapper.findByUserId(applicationReviewDTO.getUserId());
+        ApplicationReview applicationReview = new ApplicationReview();
+        BeanUtil.copyProperties(applicationReviewDTO, applicationReview);
+        applicationReview.setApplicationTime(LocalDateTime.now());
+        applicationReview.setIdNumber(talent.getIdNumber());
+        applicationReview.setReviewStatus(0);
+        return applicationReviewMapper.insert(applicationReview);
     }
 
-    public void update(ApplicationReview applicationReview) {
-         applicationReviewMapper.update(applicationReview);
+    public int update(ApplicationReviewUpdateDTO applicationReviewUpdateDTO) {
+        ApplicationReview applicationReview = new ApplicationReview();
+        BeanUtil.copyProperties(applicationReviewUpdateDTO, applicationReview);
+        applicationReview.setReviewTime(LocalDateTime.now());
+         return applicationReviewMapper.update(applicationReview);
     }
 
-    public void deleteByApplyId(int applyId) {
-         applicationReviewMapper.deleteByApplyId(applyId);
+    public int deleteByApplyId(int applyId) {
+         return applicationReviewMapper.deleteByApplyId(applyId);
     }
 
+    @Transactional
     @Override
     public PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO) {
-        PageHelper.startPage(applicationReviewPageQueryDTO.getPageIndex(), applicationReviewPageQueryDTO.getPageSize());
-        Page<ApplicationReview> page = applicationReviewMapper.selectByCriteria(applicationReviewPageQueryDTO);
+        Talent talent = talentMapper.findByUserId(applicationReviewPageQueryDTO.getUserId());
+        ApplicationReviewQueryDTO applicationReviewQueryDTO = new ApplicationReviewQueryDTO();
+        BeanUtil.copyProperties(applicationReviewPageQueryDTO, applicationReviewQueryDTO);
+        if (talent != null){
+            applicationReviewQueryDTO.setIdNumber(talent.getIdNumber());
+        }
+        PageHelper.startPage(applicationReviewQueryDTO.getPageIndex(), applicationReviewQueryDTO.getPageSize());
+        Page<ApplicationReview> page = applicationReviewMapper.selectByCriteria(applicationReviewQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+
     }
 
-    public void deleteByJobId(int jobId) {
-         applicationReviewMapper.deleteByJobId(jobId);
+    public int deleteByJobId(int jobId) {
+         return applicationReviewMapper.deleteByJobId(jobId);
     }
 }

@@ -8,7 +8,6 @@ import com.voyager.controller.UserController;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.dto.ResponsiblePersonRegisterDTO;
-import com.voyager.domain.dto.UserLoginDTO;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.User;
 import com.voyager.mapper.ResponsiblePersonMapper;
@@ -16,6 +15,7 @@ import com.voyager.mapper.UserMapper;
 import com.voyager.service.ResponsiblePersonService;
 import com.voyager.utills.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,6 +31,9 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
     private UserMapper userMapper;
     @Autowired
     private UserController userController;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ResponsiblePerson findById(int personId) {
@@ -49,7 +52,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Override
     public int insert(ResponsiblePersonRegisterDTO responsiblePersonRegisterDTO) {
-        ResponsiblePerson responsiblePerson=new ResponsiblePerson();
+        ResponsiblePerson responsiblePerson = new ResponsiblePerson();
         BeanUtil.copyProperties(responsiblePersonRegisterDTO, responsiblePerson);
         responsiblePerson.setUserId(UserHolder.getInfoByToken().getUserId());
         return responsiblePersonMapper.insert(responsiblePerson);
@@ -76,14 +79,14 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
     @Override
     public ResponsiblePerson login(PersonLoginDTO personLoginDTO) {
         ResponsiblePerson responsiblePerson = responsiblePersonMapper.findByPhone(personLoginDTO.getPhone());
-        if (responsiblePerson == null){
+        if (responsiblePerson == null) {
             return null;
         }
         User user = userMapper.findByUserId(responsiblePerson.getUserId());
-        if (user == null){
+        if (user == null) {
             return null;
         }
-        if (user.getPassword().equals(personLoginDTO.getPassword())){
+        if (passwordEncoder.matches(personLoginDTO.getPassword(), user.getPassword())) {
             return responsiblePerson;
         }
         return null;

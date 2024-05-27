@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Schema(description = "应用审核页面查询DTO")
 @Data
-public class ApplicationReviewPageQueryDTO {
+public class ApplicationReviewQueryDTO {
 
 
     /**
@@ -40,4 +40,10 @@ public class ApplicationReviewPageQueryDTO {
      */
     @Schema(description = "关联到 User 表的用户ID")
     private Long userId;
+
+    /**
+     * 身份证号
+     */
+    @Schema(description = "身份证号")
+    private String idNumber;
 }

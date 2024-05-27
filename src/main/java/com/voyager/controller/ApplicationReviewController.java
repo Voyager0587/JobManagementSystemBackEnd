@@ -2,7 +2,9 @@ package com.voyager.controller;
 
 import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.ApplicationReviewDTO;
 import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
+import com.voyager.domain.dto.ApplicationReviewUpdateDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import com.voyager.service.ApplicationReviewService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -16,6 +18,7 @@ import java.util.List;
 
 /**
  * 申请审核接口
+ *
  * @author Voyager
  * @date 2024/05/25
  */
@@ -27,6 +30,10 @@ public class ApplicationReviewController {
     @Autowired
     private ApplicationReviewService applicationReviewService;
 
+
+
+
+
     /**
      * 根据申请ID查询申请信息
      *
@@ -35,7 +42,6 @@ public class ApplicationReviewController {
      */
     @GetMapping("/{applyId}")
     @Operation(summary = "根据申请ID查询申请信息")
-    @Parameter(name = "applyId", description = "申请ID")
     public Result<ApplicationReview> findByApplyId(@PathVariable int applyId) {
         return Result.success(applicationReviewService.findByApplyId(applyId));
     }
@@ -47,7 +53,6 @@ public class ApplicationReviewController {
      * @return 返回一个包含与给定职位ID匹配的ApplicationReview对象的列表
      */
     @Operation(summary = "根据职位ID查询审核和申请")
-    @Parameter(name = "jobId", description = "职位ID")
     @GetMapping("/job/{jobId}")
     public Result<List<ApplicationReview>> findByJobId(@PathVariable int jobId) {
         return Result.success(applicationReviewService.findByJobId(jobId));
@@ -60,7 +65,6 @@ public class ApplicationReviewController {
      * @return 返回一个包含与给定身份证号匹配的ApplicationReview对象的列表
      */
     @Operation(summary = "根据身份证号查询申请信息")
-    @Parameter(name = "idNumber", description = "身份证号")
     @GetMapping("/idNumber/{idNumber}")
     public Result<List<ApplicationReview>> findByIdNumber(@PathVariable String idNumber) {
         return Result.success(applicationReviewService.findByIdNumber(idNumber));
@@ -73,7 +77,6 @@ public class ApplicationReviewController {
      * @return 返回一个包含与给定状态匹配的ApplicationReview对象的列表
      */
     @Operation(summary = "根据审核状态查询申请信息")
-    @Parameter(name = "status", description = "审核状态")
     @GetMapping("/status/{status}")
     public Result<List<ApplicationReview>> findByStatus(@PathVariable int status) {
         return Result.success(applicationReviewService.findByStatus(status));
@@ -82,28 +85,30 @@ public class ApplicationReviewController {
     /**
      * 插入新的申请信息
      *
-     * @param applicationReview 新的ApplicationReview对象，包含要插入的数据
+     * @param applicationReviewDTO 新的ApplicationReview对象，包含要插入的数据
      * @return 返回插入操作影响的行数
      */
     @Operation(summary = "插入新的申请信息")
     @PostMapping("/insert")
-    public Result<String> insert(@RequestBody ApplicationReview applicationReview) {
-        applicationReviewService.insert(applicationReview);
-        return Result.success("插入成功");
+    public Result<String> insert(@RequestBody ApplicationReviewDTO applicationReviewDTO) {
+        if (applicationReviewService.insert(applicationReviewDTO) == 1) {
+            return Result.success("插入成功");
+        }
+        return Result.error("插入失败");
     }
 
     /**
      * 更新申请信息
      *
-     * @param applicationReview 包含更新数据的ApplicationReview对象
+     * @param applicationReviewUpdateDTO 包含更新数据的ApplicationReview对象
      * @return 返回更新操作影响的行数
      */
     @Operation(summary = "更新申请信息")
-    @Parameter(name = "applicationReview", description = "包含更新数据的ApplicationReview对象")
     @PostMapping("/update")
-    public Result<String> update(@RequestBody ApplicationReview applicationReview) {
-        applicationReviewService.update(applicationReview);
-        return Result.success("更新成功");
+    public Result<String> update(@RequestBody ApplicationReviewUpdateDTO applicationReviewUpdateDTO) {
+        if (applicationReviewService.update(applicationReviewUpdateDTO) == 1)
+            return Result.success("更新成功");
+        return Result.error("更新失败");
     }
 
     /**
@@ -112,11 +117,13 @@ public class ApplicationReviewController {
      * @param applyId 申请ID，用于指定要删除的申请记录
      * @return 返回删除操作影响的行数
      */
-    @Operation(summary = "删除申请信息")
+    @Operation(summary = "根据申请ID删除申请信息")
     @Parameter(name = "applyId", description = "申请ID")
     @DeleteMapping("/{applyId}")
     public Result<String> deleteByApplyId(@PathVariable int applyId) {
-        applicationReviewService.deleteByApplyId(applyId);
+        if (applicationReviewService.deleteByApplyId(applyId) == 0) {
+            return Result.error("删除失败");
+        }
         return Result.success("删除成功");
     }
 
@@ -127,10 +134,11 @@ public class ApplicationReviewController {
      * @return 返回一个表示操作成功的结果对象
      */
     @Operation(summary = "根据职位ID删除相关的申请信息")
-    @Parameter(name = "jobId", description = "职位ID")
     @DeleteMapping("/job/{jobId}")
     public Result<String> deleteByJobId(@PathVariable int jobId) {
-        applicationReviewService.deleteByJobId(jobId);
+        if (applicationReviewService.deleteByJobId(jobId) == 0) {
+            return Result.error("删除失败");
+        }
         return Result.success("删除成功");
     }
 

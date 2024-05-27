@@ -12,6 +12,8 @@ import com.voyager.mapper.UserMapper;
 import com.voyager.service.TalentService;
 import com.voyager.utills.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +24,9 @@ public class TalentServiceImpl implements TalentService {
     private TalentMapper talentMapper;
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public int insertTalent(Talent talent) {
@@ -70,7 +75,7 @@ public class TalentServiceImpl implements TalentService {
         User user = userMapper.findByUserId(talent.getUserId());
         if (user==null){
             return null;//TODO 用户不存在
-        }else if (user.getPassword().equals(personLoginDTO.getPassword())){
+        }else if (passwordEncoder.matches(personLoginDTO.getPassword(), user.getPassword())){
             return talent;
         }else{
             return null;// TODO 密码错误

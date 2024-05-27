@@ -2,6 +2,7 @@ package com.voyager.mapper;
 
 import com.github.pagehelper.Page;
 import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
+import com.voyager.domain.dto.ApplicationReviewQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import org.apache.ibatis.annotations.*;
 
@@ -53,16 +54,16 @@ public interface ApplicationReviewMapper {
      * @param applicationReview 申请
      */
     @Insert("INSERT INTO ApplicationReview(application_time, review_time, review_result, review_status, id_number, job_id) " +
-            "VALUES(#{applicationTime}, #{reviewTime}, #{reviewResult}, #{status}, #{idNumber}, #{jobId})")
+            "VALUES(#{applicationTime}, #{reviewTime}, #{reviewResult}, #{reviewStatus}, #{idNumber}, #{jobId})")
     @Options(useGeneratedKeys = true, keyProperty = "applyId")
-    void insert(ApplicationReview applicationReview);
+    int insert(ApplicationReview applicationReview);
 
     /**
      * 更新申请信息
      *
      * @param applicationReview 申请
      */
-    void update(ApplicationReview applicationReview);
+    int update(ApplicationReview applicationReview);
 
     /**
      * 删除申请信息
@@ -70,7 +71,7 @@ public interface ApplicationReviewMapper {
      * @param applyId 申请id
      */
     @Delete("DELETE FROM ApplicationReview WHERE apply_id = #{applyId}")
-    void deleteByApplyId(int applyId);
+    int deleteByApplyId(int applyId);
 
     /**
      * 根据职位ID删除相关的申请信息
@@ -78,7 +79,7 @@ public interface ApplicationReviewMapper {
      * @param jobId 职位id
      */
     @Delete("DELETE FROM ApplicationReview WHERE job_id = #{jobId}")
-    void deleteByJobId(int jobId);
+    int deleteByJobId(int jobId);
 
 
     /**
@@ -86,7 +87,7 @@ public interface ApplicationReviewMapper {
      *
      * @return {@link Page }<{@link ApplicationReview }>
      */
-    Page<ApplicationReview> selectByCriteria(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO
+    Page<ApplicationReview> selectByCriteria(ApplicationReviewQueryDTO applicationReviewQueryDTO
     );
 }
 

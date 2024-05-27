@@ -3,7 +3,9 @@ package com.voyager.service;
 
 import com.github.pagehelper.PageInfo;
 import com.voyager.common.result.PageResult;
+import com.voyager.domain.dto.ApplicationReviewDTO;
 import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
+import com.voyager.domain.dto.ApplicationReviewUpdateDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 
 import java.util.List;
@@ -13,10 +15,10 @@ public interface ApplicationReviewService {
     List<ApplicationReview> findByJobId(int jobId);
     List<ApplicationReview> findByIdNumber(String idNumber);
     List<ApplicationReview> findByStatus(int status);
-    void deleteByJobId(int jobId);
-     void insert(ApplicationReview applicationReview) ;
-     void update(ApplicationReview applicationReview) ;
-     void deleteByApplyId(int applyId);
+    int deleteByJobId(int jobId);
+     int insert(ApplicationReviewDTO applicationReviewDTO) ;
+     int update(ApplicationReviewUpdateDTO applicationReviewUpdateDTO) ;
+     int deleteByApplyId(int applyId);
     PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO);
 
 }

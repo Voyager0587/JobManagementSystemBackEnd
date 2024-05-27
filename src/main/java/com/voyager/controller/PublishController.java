@@ -64,8 +64,10 @@ public class PublishController {
     @Operation(summary = "插入新的发布信息")
     @PostMapping("/insert")
     public Result<String> insert(@RequestBody Publish publish) {
-        publishService.insert(publish);
-        return Result.success("插入成功");
+        if (publishService.insert(publish) == 1) {
+            return Result.success("插入成功");
+        }
+        return Result.error("插入失败");
     }
 
     /**
@@ -77,8 +79,10 @@ public class PublishController {
     @Operation(summary = "更新发布信息的有效时间")
     @PutMapping("/update")
     public Result<String> update(@RequestBody Publish publish) {
-        publishService.update(publish);
-        return Result.success("更新成功");
+        if (publishService.update(publish) == 1) {
+            return Result.success("更新成功");
+        }
+        return Result.error("更新失败");
     }
 
     /**
@@ -91,8 +95,10 @@ public class PublishController {
     @DeleteMapping("/delete/{publishId}")
     @Parameter(description = "发布ID")
     public Result<String> deleteByPublishId(@PathVariable int publishId) {
-        publishService.deleteByPublishId(publishId);
-        return Result.success("删除成功");
+        if (publishService.deleteByPublishId(publishId) == 1) {
+            return Result.success("删除成功");
+        }
+        return Result.error("删除失败");
     }
 
     /**

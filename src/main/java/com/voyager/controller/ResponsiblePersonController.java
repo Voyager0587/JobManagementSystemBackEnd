@@ -133,8 +133,10 @@ public class ResponsiblePersonController {
     @Operation(summary = "添加新的负责人")
     @PostMapping("/add")
     public Result<String> insert(@RequestBody ResponsiblePersonRegisterDTO responsiblePersonRegisterDTO) {
-        responsiblePersonService.insert(responsiblePersonRegisterDTO);
-        return Result.success("添加成功");
+        if (responsiblePersonService.insert(responsiblePersonRegisterDTO)==1) {
+            return Result.success("添加成功");
+        }
+        return Result.error("添加失败");
     }
 
     /**
@@ -146,9 +148,12 @@ public class ResponsiblePersonController {
     @Operation(summary = "更新负责人信息")
     @PutMapping("/update")
     public Result<String> update(@RequestBody ResponsiblePerson responsiblePerson) {
-        responsiblePersonService.update(responsiblePerson);
-        return Result.success("更新成功");
+        if (responsiblePersonService.update(responsiblePerson)==1){
+            return Result.success("更新成功");
+        }
+        return Result.error("更新失败");
     }
+
 
     /**
      * 根据负责人ID删除负责人

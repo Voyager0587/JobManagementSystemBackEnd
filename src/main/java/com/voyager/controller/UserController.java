@@ -86,6 +86,7 @@ public class UserController {
 
     /**
      * 登录
+     *
      * @param userLoginDTO
      * @return {@link Result }<{@link UserLoginVO }>
      */
@@ -117,8 +118,10 @@ public class UserController {
     @Operation(summary = "更新用户信息")
     @PutMapping("/update")
     public Result<String> update(@RequestBody User user) {
-        userService.update(user);
-        return Result.success("更新成功");
+        if (userService.update(user) == 1) {
+            return Result.success("更新成功");
+        }
+        return Result.error("更新失败");
     }
 
     /**
@@ -131,8 +134,10 @@ public class UserController {
     @DeleteMapping("/delete/{userId}")
     @Parameter(description = "用户ID")
     public Result<String> deleteByUserId(@PathVariable int userId) {
-        userService.deleteByUserId(userId);
-        return Result.success("删除成功");
+        if (userService.deleteByUserId(userId) == 1) {
+            return Result.success("删除成功");
+        }
+        return Result.error("删除失败");
     }
 
     /**

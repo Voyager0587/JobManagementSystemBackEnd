@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 /**
  * 职位需求接口
+ *
  * @author Voyager
  * @date 2024/05/25
  */
@@ -33,8 +34,9 @@ public class JobRequirementController {
     @Operation(summary = "插入新的JobRequirement记录")
     @PostMapping("/insert")
     public Result<String> insertJobRequirement(@RequestBody JobRequirement jobRequirement) {
-        jobRequirementService.insertJobRequirement(jobRequirement);
-        return Result.success("插入成功");
+        if (jobRequirementService.insertJobRequirement(jobRequirement) == 1)
+            return Result.success("插入成功");
+        return Result.error("插入失败");
     }
 
     /**
@@ -64,7 +66,7 @@ public class JobRequirementController {
     @GetMapping("/find")
     @Parameter(name = "jobName", description = "职位名称")
     @Parameter(name = "companyId", description = "公司ID")
-    public Result<JobRequirement> findJobRequirementByNameAndCompanyId( String jobName,  int companyId) {
+    public Result<JobRequirement> findJobRequirementByNameAndCompanyId(String jobName, int companyId) {
         JobRequirement jobRequirement = jobRequirementService.findJobRequirementByNameAndCompanyId(jobName, companyId);
         return Result.success(jobRequirement);
     }
