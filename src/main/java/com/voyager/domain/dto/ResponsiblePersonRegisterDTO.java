@@ -35,6 +35,9 @@ public class ResponsiblePersonRegisterDTO implements Serializable {
     @Schema(description = "手机号码")
     private String phoneNumber;
 
+    /**
+     * 公司ID
+     */
     @Schema(description = "公司ID")
     private Long companyId;
 }

@@ -9,7 +9,7 @@ import com.voyager.domain.pojo.User;
 public interface UserService {
     User findByUserId(Long userId);
     User findByUsername(String username);
-    int insert(UserRegisterDTO user);
+    User insert(UserRegisterDTO user);
     int update(User user);
     int deleteByUserId(int userId);
     PageResult pageQuery(UserPageQueryDTO userPageQueryDTO);

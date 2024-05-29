@@ -4,6 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.voyager.mapper.TalentMapper">
+    <update id="updateTalent">
+        UPDATE Talent t JOIN User u ON t.user_id = u.user_id
+        <set>
+            <if test="name != null and name != ''">
+                t.name = #{name},
+            </if>
+            <if test="gender != null">
+                t.gender = #{gender},
+            </if>
+            <if test="birthDate != null">
+                t.birth_date = #{birthDate},
+            </if>
+            <if test="email != null and email != ''">
+                t.email = #{email},
+            </if>
+            <if test="phoneNumber != null and phoneNumber != ''">
+                t.phone_number = #{phoneNumber},
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                t.id_number = #{idNumber},
+            </if>
+        </set>
+        WHERE t.user_id = #{user_id}
+    </update>
 
     <select id="selectByCriteria" resultType="com.voyager.domain.pojo.Talent">
         SELECT * FROM Talent

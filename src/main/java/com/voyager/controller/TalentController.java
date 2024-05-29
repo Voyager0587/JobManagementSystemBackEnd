@@ -7,6 +7,7 @@ import com.voyager.common.result.Result;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.TalentPageQueryDTO;
 import com.voyager.domain.dto.TalentRegisterDTO;
+import com.voyager.domain.dto.TalentUpdateDTO;
 import com.voyager.domain.pojo.Talent;
 import com.voyager.domain.pojo.User;
 import com.voyager.domain.vo.PersonLoginVO;
@@ -121,13 +122,13 @@ public class TalentController {
     /**
      * 更新人才信息
      *
-     * @param talent 更新后的Talent对象，包含要修改的信息
+     * @param talentUpdateDTO 更新后的Talent对象，包含要修改的信息
      * @return 包装更新操作影响的行数的Result对象
      */
     @Operation(summary = "更新人才信息")
-    @PutMapping("/update")
-    public Result<String> updateTalent(@RequestBody Talent talent) {
-        if (talentService.updateTalent(talent) == 1)
+    @PostMapping("/update")
+    public Result<String> updateTalent(@RequestBody TalentUpdateDTO talentUpdateDTO) {
+        if (talentService.updateTalent(talentUpdateDTO) == 1)
             return Result.success("更新成功");
         return Result.error("更新失败");
     }

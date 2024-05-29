@@ -12,7 +12,6 @@ import com.voyager.domain.vo.UserVO;
 import com.voyager.mapper.UserMapper;
 import com.voyager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,6 +26,7 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @Override
     public User findByUserId(Long userId) {
         return userMapper.findByUserId(userId);
@@ -38,13 +38,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int insert(UserRegisterDTO userRegisterDTO) {
+    public User insert(UserRegisterDTO userRegisterDTO) {
         User user = new User();
         BeanUtil.copyProperties(userRegisterDTO, user);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRegisterTime(LocalDateTime.now());
-        user.setUserType('0'); // 求职者
-        return userMapper.insert(user);
+        user.setUserType(userRegisterDTO.getUserType());
+        if (userMapper.insert(user) == 1) {
+            return user;
+        }
+        return null;
     }
 
     @Override
@@ -70,10 +73,9 @@ public class UserServiceImpl implements UserService {
     public User login(UserLoginDTO userLoginDTO) {
         if (userLoginDTO.getUsername() != null && userLoginDTO.getPassword() != null) {
             User user = userMapper.findByUsername(userLoginDTO.getUsername());
-            if (user==null){
+            if (user == null) {
 //                throw new AccountNotFoundException(MessageConstant.ACCOUNT_NOT_FOUND);
-            }else
-            if ( passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
+            } else if (passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
                 return user;
             }
 

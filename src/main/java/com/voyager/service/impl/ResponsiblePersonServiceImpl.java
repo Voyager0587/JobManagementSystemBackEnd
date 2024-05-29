@@ -4,15 +4,16 @@ import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.voyager.common.result.PageResult;
-import com.voyager.controller.UserController;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.dto.ResponsiblePersonRegisterDTO;
+import com.voyager.domain.dto.UserRegisterDTO;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.User;
 import com.voyager.mapper.ResponsiblePersonMapper;
 import com.voyager.mapper.UserMapper;
 import com.voyager.service.ResponsiblePersonService;
+import com.voyager.service.UserService;
 import com.voyager.utills.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private UserController userController;
+    private UserService userService;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -50,6 +51,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
         return responsiblePersonMapper.findByCompanyId(companyId);
     }
 
+    @Transactional
     @Override
     public int insert(ResponsiblePersonRegisterDTO responsiblePersonRegisterDTO) {
         ResponsiblePerson responsiblePerson = new ResponsiblePerson();

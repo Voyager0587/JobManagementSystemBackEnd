@@ -39,8 +39,8 @@ public class TalentServiceImpl implements TalentService {
     }
 
     @Override
-    public int updateTalent(Talent talent) {
-        return talentMapper.updateTalent(talent);
+    public int updateTalent(TalentUpdateDTO talentUpdateDTO) {
+        return talentMapper.updateTalent(talentUpdateDTO);
     }
 
     @Override

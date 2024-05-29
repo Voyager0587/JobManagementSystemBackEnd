@@ -26,18 +26,18 @@ public class CompanyController {
     private CompanyService companyService;
 
     /**
-     * 注册公司
+     * 绑定公司
      *
      * @param company Company对象
      * @return 包装插入操作影响的行数的Result对象
      */
-    @Operation(summary = "注册公司")
+    @Operation(summary = "绑定公司")
     @PostMapping("/insert")
     public Result<String> insertCompany(@RequestBody Company company) {
         if (companyService.insertCompany(company) == 1) {
-            return Result.success("注册成功");
+            return Result.success("绑定公司成功");
         }
-        return Result.error("注册失败");
+        return Result.error("绑定公司失败");
     }
 
     /**

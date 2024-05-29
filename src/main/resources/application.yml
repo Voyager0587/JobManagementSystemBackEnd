@@ -4,15 +4,15 @@ spring:
   application:
     name: springboot-template
   datasource: # here
-    url: jdbc:mysql://10.33.72.249:3306/job_portal?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://8.217.238.90:3306/job_portal?useUnicode=true&characterEncoding=UTF-8&autoReconnect=true&serverTimezone=Asia/Shanghai
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 20040317Li
+    username: LHG
+    password: 20040317@Li
   data:
     redis:
-      host: 10.33.72.249
+      host: 8.217.238.90
       port: 6379
-      password: 20040317LHG
+      password: 20040317@Li
       database: 10
 springdoc:
   swagger-ui:

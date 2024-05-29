@@ -19,6 +19,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class User {
 
+    public static final Character USER_TYPE_RESPONSIBLE_PERSON = 1;
     /**
      * 用户ID，主键，自动递增
      */

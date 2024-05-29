@@ -30,6 +30,7 @@ public interface UserMapper {
      * @return 插入操作影响的行数
      */
     @Insert("INSERT INTO User (username, password, register_time, user_type) VALUES (#{username}, #{password}, #{registerTime}, #{userType})")
+    @Options(useGeneratedKeys = true, keyProperty = "userId")
     int insert(User user);
 
     /**
@@ -40,6 +41,14 @@ public interface UserMapper {
     @Update("UPDATE User SET password = #{password}, user_type = #{userType} WHERE user_id = #{userId}")
     int update(User user);
 
+
+    /**
+     * 更新User记录
+     * @param user User对象，包含需要更新的数据
+     * @return int
+     */
+    @Update("UPDATE User SET user_type = #{userType} WHERE user_id = #{userId}")
+    int updateUserTypeByUserId(User user);
     /**
      * 根据用户ID删除User记录
      * @param userId 用户ID

@@ -78,7 +78,7 @@ public class UserController {
     @Operation(summary = "注册")
     @PostMapping("/register")
     public Result<String> register(@RequestBody UserRegisterDTO userRegisterDTO) {
-        if (userService.insert(userRegisterDTO) == 1) {
+        if (userService.insert(userRegisterDTO) != null) {
             return Result.success("注册成功");
         }
         return Result.error("注册失败");
