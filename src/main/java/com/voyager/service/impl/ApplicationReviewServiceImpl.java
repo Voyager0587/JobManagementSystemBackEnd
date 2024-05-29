@@ -82,6 +82,6 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
     }
 
     public int deleteByJobId(int jobId) {
-         return applicationReviewMapper.deleteByJobId(jobId);
+         return applicationReviewMapper.deleteByJobId((long) jobId);
     }
 }

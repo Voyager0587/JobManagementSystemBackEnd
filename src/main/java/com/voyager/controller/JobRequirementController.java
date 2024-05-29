@@ -47,7 +47,7 @@ public class JobRequirementController {
      * @return 包装删除操作影响的行数的Result对象
      */
     @Operation(summary = "根据职位名称和公司ID删除JobRequirement记录")
-    @DeleteMapping("/delete")
+    @PostMapping("/delete")
     @Parameter(description = "职位名称")
     @Parameter(description = "公司ID")
     public Result<String> deleteJobRequirementByNameAndCompanyId(@RequestParam String jobName, @RequestParam int companyId) {
@@ -80,7 +80,7 @@ public class JobRequirementController {
      * @return 包装更新操作影响的行数的Result对象
      */
     @Operation(summary = "更新职位需求人数")
-    @PutMapping("/update/numberRequired")
+    @PostMapping("/update/numberRequired")
     @Parameter(description = "职位名称")
     @Parameter(description = "公司ID")
     @Parameter(description = "更新后的需求人数")

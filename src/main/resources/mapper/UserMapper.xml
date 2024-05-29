@@ -8,6 +8,7 @@
     <select id="selectByCriteria" resultType="com.voyager.domain.pojo.User">
         SELECT * FROM User
         <where>
+            deleted = 0
             <if test="username != null and username != ''">
                 AND username = #{username}
             </if>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.voyager.mapper.EducationMapper">
+    <update id="updateEducation">
+        UPDATE Education
+        <set>
+            <if test="schoolName != null and schoolName != ''">
+                school_name = #{schoolName},
+            </if>
+            <if test="major != null and major != ''">
+                major = #{major},
+            </if>
+            <if test="enrollmentDate != null">
+                enrollment_date = #{enrollmentDate},
+            </if>
+            <if test="graduationDate != null">
+                graduation_date = #{graduationDate},
+            </if>
+        </set>
+        WHERE education_id = #{educationId}
+    </update>
+
+    <select id="selectByCriteria" resultType="com.voyager.domain.pojo.Education">
+        SELECT * FROM Education
+        <where>
+            <if test="schoolName != null and schoolName != ''">
+                AND school_name LIKE CONCAT('%', #{schoolName}, '%')
+            </if>
+            <if test="idNumber != null and idNumber != ''">
+                AND id_number = #{idNumber}
+            </if>
+        </where>
+        ORDER BY enrollment_date DESC
+    </select>
+</mapper>

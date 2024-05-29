@@ -26,7 +26,7 @@
                 t.id_number = #{idNumber},
             </if>
         </set>
-        WHERE t.user_id = #{user_id}
+        WHERE t.user_id = #{userId}
     </update>
 
     <select id="selectByCriteria" resultType="com.voyager.domain.pojo.Talent">

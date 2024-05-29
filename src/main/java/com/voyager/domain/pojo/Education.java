@@ -52,5 +52,5 @@ public class Education {
      * 关联的人才身份证号
      */
     @Schema(description = "关联的人才身份证号")
-    private Integer idNumber;
+    private String idNumber;
 }

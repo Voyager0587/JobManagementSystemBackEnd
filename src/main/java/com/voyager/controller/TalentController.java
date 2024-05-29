@@ -109,11 +109,11 @@ public class TalentController {
      * @param userId 用户ID，用于定位要删除的人才记录
      * @return 包装删除操作影响的行数的Result对象
      */
-    @Operation(summary = "根据用户ID删除人才信息")
+    @Operation(summary = "根据用户ID级联删除人才信息")
     @Parameter(name = "userId", description = "用户ID")
-    @DeleteMapping("/delete/{userId}")
+    @PostMapping("/delete/{userId}")
     public Result<String> deleteTalent(@PathVariable int userId) {
-        if (talentService.deleteByIdNumber(userId) == 1) {
+        if (talentService.deleteByUserId(userId) == 1) {
             return Result.success("删除成功");
         }
         return Result.error("删除失败");

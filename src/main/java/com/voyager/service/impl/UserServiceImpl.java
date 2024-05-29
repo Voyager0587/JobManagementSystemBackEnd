@@ -9,7 +9,10 @@ import com.voyager.domain.dto.UserPageQueryDTO;
 import com.voyager.domain.dto.UserRegisterDTO;
 import com.voyager.domain.pojo.User;
 import com.voyager.domain.vo.UserVO;
+import com.voyager.mapper.TalentMapper;
 import com.voyager.mapper.UserMapper;
+import com.voyager.service.ResponsiblePersonService;
+import com.voyager.service.TalentService;
 import com.voyager.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,6 +26,13 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private ResponsiblePersonService responsiblePersonService;
+
+    @Autowired
+    private TalentService talentService;
+
 
     @Autowired
     private PasswordEncoder passwordEncoder;
@@ -57,7 +67,16 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByUserId(int userId) {
-        return userMapper.deleteByUserId(userId);
+        User user = userMapper.findByUserId((long) userId);
+        if (user.getUserType()=='1') {
+            return responsiblePersonService.deleteByUserId(userId);
+        }else if (user.getUserType()=='0') {
+            return talentService.deleteByUserId(userId);
+        }else {
+            //TODO 管理员的
+            return 0;
+        }
+
     }
 
     @Override

@@ -20,6 +20,12 @@ import java.time.LocalDate;
 public class TalentUpdateDTO {
 
     /**
+     * 关联到 User 表的用户ID
+     */
+    @Schema(description = "关联到 User 表的用户ID")
+    private Long userId;
+
+    /**
      * 身份证号，作为主键
      */
     @Schema(description = "身份证号，作为主键")
@@ -47,7 +53,6 @@ public class TalentUpdateDTO {
     /**
      * 电子邮箱
      */
-    @Email(message = "请输入有效的电子邮件地址")
     @Schema(description = "电子邮箱")
     private String email;
 

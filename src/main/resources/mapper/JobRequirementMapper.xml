@@ -7,6 +7,7 @@
 
 
     <select id="selectByCriteria" resultType="com.voyager.domain.pojo.JobRequirement">
+        # 查询deleted=0的数据
         SELECT * FROM jobrequirement
         <where>
             <if test="jobName != null and jobName != ''">

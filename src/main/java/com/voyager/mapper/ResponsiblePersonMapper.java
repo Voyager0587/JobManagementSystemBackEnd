@@ -24,7 +24,7 @@ public interface ResponsiblePersonMapper {
      * @return 对应的ResponsiblePerson对象
      */
     @Select("SELECT * FROM responsibleperson WHERE user_id = #{userId}")
-    ResponsiblePerson findByUserId(int userId);
+    ResponsiblePerson findByUserId(Long userId);
 
     /**
      * 根据companyId查询所有ResponsiblePerson记录
@@ -32,7 +32,7 @@ public interface ResponsiblePersonMapper {
      * @return 对应的ResponsiblePerson对象列表
      */
     @Select("SELECT * FROM responsibleperson WHERE company_id = #{companyId}")
-    List<ResponsiblePerson> findByCompanyId(int companyId);
+    List<ResponsiblePerson> findByCompanyId(Long companyId);
 
     /**
      * 插入新的ResponsiblePerson记录
@@ -57,7 +57,7 @@ public interface ResponsiblePersonMapper {
      * @return 删除操作影响的行数
      */
     @Delete("DELETE FROM responsibleperson WHERE person_id = #{personId}")
-    int deleteById(int personId);
+    int deleteById(Long personId);
 
     /**
      * 根据条件查询ResponsiblePerson记录
@@ -70,4 +70,9 @@ public interface ResponsiblePersonMapper {
     ResponsiblePerson findByPhone(String phone);
 
 
+    @Update("UPDATE responsibleperson SET company_id = #{companyId}")
+    void updateCompanyId(int companyId);
+
+    @Update("UPDATE responsibleperson SET company_id = #{companyId} WHERE person_id = #{personId}")
+    void updateCompanyIdById(Long companyId, Long personId);
 }

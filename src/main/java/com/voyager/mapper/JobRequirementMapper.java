@@ -4,6 +4,8 @@ import com.voyager.domain.dto.JobRequirementPageQueryDTO;
 import com.voyager.domain.pojo.JobRequirement;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
+
 @Mapper
 public interface JobRequirementMapper {
 
@@ -56,4 +58,9 @@ public interface JobRequirementMapper {
 
     Page<JobRequirement> selectByCriteria(JobRequirementPageQueryDTO jobRequirementPageQueryDTO);
 
+    @Delete("DELETE FROM jobrequirement WHERE company_id = #{companyId}")
+    void deleteJobRequirementsCompanyId(Long companyId);
+
+    @Select("SELECT * FROM jobrequirement WHERE company_id = #{companyId}")
+    List<JobRequirement> findJobRequirementByCompanyId(Long companyId);
 }

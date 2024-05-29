@@ -131,7 +131,7 @@ public class UserController {
      * @return 包装删除操作结果的Result对象
      */
     @Operation(summary = "根据用户ID删除用户")
-    @DeleteMapping("/delete/{userId}")
+    @PostMapping("/delete/{userId}")
     @Parameter(description = "用户ID")
     public Result<String> deleteByUserId(@PathVariable int userId) {
         if (userService.deleteByUserId(userId) == 1) {

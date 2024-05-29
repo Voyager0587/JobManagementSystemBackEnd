@@ -79,7 +79,7 @@ public interface ApplicationReviewMapper {
      * @param jobId 职位id
      */
     @Delete("DELETE FROM ApplicationReview WHERE job_id = #{jobId}")
-    int deleteByJobId(int jobId);
+    int deleteByJobId(Long jobId);
 
 
     /**
@@ -89,5 +89,8 @@ public interface ApplicationReviewMapper {
      */
     Page<ApplicationReview> selectByCriteria(ApplicationReviewQueryDTO applicationReviewQueryDTO
     );
+
+    @Delete("DELETE FROM ApplicationReview WHERE id_number = #{idNumber}")
+    void deleteByIdNumber(String idNumber);
 }
 

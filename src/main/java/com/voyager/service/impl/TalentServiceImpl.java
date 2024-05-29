@@ -7,6 +7,8 @@ import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.*;
 import com.voyager.domain.pojo.Talent;
 import com.voyager.domain.pojo.User;
+import com.voyager.mapper.ApplicationReviewMapper;
+import com.voyager.mapper.EducationMapper;
 import com.voyager.mapper.TalentMapper;
 import com.voyager.mapper.UserMapper;
 import com.voyager.service.TalentService;
@@ -22,9 +24,15 @@ public class TalentServiceImpl implements TalentService {
 
     @Autowired
     private TalentMapper talentMapper;
+
+    @Autowired
+    private EducationMapper educationMapper;
+
     @Autowired
     private UserMapper userMapper;
 
+    @Autowired
+    private ApplicationReviewMapper applicationReviewMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -33,9 +41,14 @@ public class TalentServiceImpl implements TalentService {
         return talentMapper.insertTalent(talent);
     }
 
+    @Transactional
     @Override
-    public int deleteByIdNumber(int userId) {
-        return talentMapper.deleteByIdNumber(userId);
+    public int deleteByUserId(int userId) {
+        Talent talent = talentMapper.findByUserId((long) userId);
+        applicationReviewMapper.deleteByIdNumber(talent.getIdNumber());
+        educationMapper.deleteEducationByIdNumber(talent.getIdNumber());
+        userMapper.updateDeletedByUserId(userId);
+        return talentMapper.deleteByUserId(userId);
     }
 
     @Override

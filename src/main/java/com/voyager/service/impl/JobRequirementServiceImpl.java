@@ -5,24 +5,31 @@ import com.github.pagehelper.PageHelper;
 import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.JobRequirementPageQueryDTO;
 import com.voyager.domain.pojo.JobRequirement;
+import com.voyager.mapper.ApplicationReviewMapper;
 import com.voyager.mapper.JobRequirementMapper;
 import com.voyager.service.JobRequirementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class JobRequirementServiceImpl implements JobRequirementService {
 
     @Autowired
     private JobRequirementMapper jobRequirementMapper;
+    @Autowired
+    private ApplicationReviewMapper applicationReviewMapper;
 
     @Override
     public int insertJobRequirement(JobRequirement jobRequirement) {
         return jobRequirementMapper.insertJobRequirement(jobRequirement);
     }
 
+    @Transactional
     @Override
     public int deleteJobRequirementByNameAndCompanyId(String jobName, int companyId) {
+        JobRequirement job = jobRequirementMapper.findJobRequirementByNameAndCompanyId(jobName, companyId);
+        applicationReviewMapper.deleteByJobId(job.getJobId());
         return jobRequirementMapper.deleteJobRequirementByNameAndCompanyId(jobName, companyId);
     }
 

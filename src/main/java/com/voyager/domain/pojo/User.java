@@ -54,4 +54,10 @@ public class User {
     @Schema(description = "用户类型，O-求职者，1-HR")
     private char userType;
 
+    /**
+     * 是否删除，0-未删除，1-已删除
+     */
+    @Schema(description = "是否删除，0-未删除，1-已删除")
+    private Integer deleted;
+
 }

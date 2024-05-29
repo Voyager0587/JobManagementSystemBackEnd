@@ -58,4 +58,12 @@ public interface CompanyMapper {
      * @return {@link Page }<{@link Company }>
      */
     Page<Company> selectByCriteria(CompanyPageQueryDTO companyPageQueryDTO);
+
+    /**
+     * 根据公司ID查询公司
+     * @param companyId 公司ID
+     * @return 对应的Company对象
+     */
+    @Select("SELECT * FROM company WHERE company_id = #{companyId}")
+    Company findCompanyByCompanyId(Long companyId);
 }

@@ -2,6 +2,8 @@ package com.voyager.controller;
 
 import com.voyager.common.result.PageResult;
 import com.voyager.common.result.Result;
+import com.voyager.domain.dto.CompanyDeleteDTO;
+import com.voyager.domain.dto.CompanyInsertDTO;
 import com.voyager.domain.dto.CompanyPageQueryDTO;
 import com.voyager.domain.pojo.Company;
 import com.voyager.service.CompanyService;
@@ -28,13 +30,13 @@ public class CompanyController {
     /**
      * 绑定公司
      *
-     * @param company Company对象
+     * @param companyInsertDTO CompanyInsertDTO
      * @return 包装插入操作影响的行数的Result对象
      */
-    @Operation(summary = "绑定公司")
+    @Operation(summary = "添加公司")
     @PostMapping("/insert")
-    public Result<String> insertCompany(@RequestBody Company company) {
-        if (companyService.insertCompany(company) == 1) {
+    public Result<String> insertCompany(@RequestBody CompanyInsertDTO companyInsertDTO) {
+        if (companyService.insertCompany(companyInsertDTO) == 1) {
             return Result.success("绑定公司成功");
         }
         return Result.error("绑定公司失败");
@@ -43,15 +45,16 @@ public class CompanyController {
     /**
      * 根据公司名称删除公司记录
      *
-     * @param companyName 公司名称
+     * @param companyDeleteDTO 公司名称
      * @return 包装删除操作影响的行数的Result对象
      */
     @Operation(summary = "根据公司名称删除公司记录")
-    @DeleteMapping("/delete/{companyName}")
+    @PostMapping("/delete")
     @Parameter(description = "公司名称")
-    public Result<String> deleteCompanyByName(@PathVariable String companyName) {
-        companyService.deleteCompanyByName(companyName);
-        return Result.success("删除成功");
+    public Result<String> deleteCompanyByName(@RequestBody CompanyDeleteDTO companyDeleteDTO) {
+        if (companyService.deleteCompanyByName(companyDeleteDTO.getCompanyName()) >= 1)
+            return Result.success("删除成功");
+        return Result.error("删除失败或者不存在该公司");
     }
 
     /**
@@ -77,10 +80,11 @@ public class CompanyController {
      * @return 包装更新操作影响的行数的Result对象
      */
     @Operation(summary = "更新公司的联系人信息")
-    @PutMapping("/updateContact")
+    @PostMapping("/updateContact")
     public Result<String> updateCompanyContact(@RequestParam String companyName, @RequestParam String contactName, @RequestParam String contactPhone) {
-        if (companyService.updateCompanyContact(companyName, contactName, contactPhone) == 1)
+        if (companyService.updateCompanyContact(companyName, contactName, contactPhone) >= 1) {
             return Result.success("联系人信息更新成功");
+        }
         return Result.error("联系人信息更新失败");
     }
 
@@ -94,7 +98,7 @@ public class CompanyController {
     @Operation(summary = "更新公司的网址")
     @PutMapping("/updateWebsite")
     public Result<String> updateCompanyWebsite(@RequestParam String companyName, @RequestParam String website) {
-        if (companyService.updateCompanyWebsite(companyName, website) == 1)
+        if (companyService.updateCompanyWebsite(companyName, website) >= 1)
             return Result.success("网址更新成功");
         return Result.error("网址更新失败");
     }

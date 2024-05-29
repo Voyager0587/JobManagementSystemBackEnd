@@ -63,4 +63,7 @@ public interface UserMapper {
      * @return {@link Page }<{@link User }>
      */
     Page<User> selectByCriteria(UserPageQueryDTO userPageQueryDTO);
+
+    @Update("UPDATE User SET deleted = 1 WHERE user_id = #{userId}")
+    int updateDeletedByUserId(int userId);
 }

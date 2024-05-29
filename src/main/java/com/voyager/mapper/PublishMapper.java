@@ -61,4 +61,7 @@ public interface PublishMapper {
      * @return {@link Page }<{@link Publish }>
      */
     Page<Publish> selectByCriteria(PublishPageQueryDTO publishPageQueryDTO);
+
+    @Delete("DELETE FROM Publish WHERE job_id = #{jobId}")
+    int deleteByJobId(Long jobId);
 }

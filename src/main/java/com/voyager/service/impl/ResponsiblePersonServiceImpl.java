@@ -7,13 +7,14 @@ import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.dto.ResponsiblePersonRegisterDTO;
-import com.voyager.domain.dto.UserRegisterDTO;
+import com.voyager.domain.pojo.Company;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.User;
+import com.voyager.mapper.CompanyMapper;
 import com.voyager.mapper.ResponsiblePersonMapper;
 import com.voyager.mapper.UserMapper;
+import com.voyager.service.CompanyService;
 import com.voyager.service.ResponsiblePersonService;
-import com.voyager.service.UserService;
 import com.voyager.utills.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,8 +32,9 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
     @Autowired
     private UserMapper userMapper;
     @Autowired
-    private UserService userService;
-
+    private CompanyService companyService;
+    @Autowired
+    private CompanyMapper companyMapper;
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -43,12 +45,12 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Override
     public ResponsiblePerson findByUserId(int userId) {
-        return responsiblePersonMapper.findByUserId(userId);
+        return responsiblePersonMapper.findByUserId((long) userId);
     }
 
     @Override
     public List<ResponsiblePerson> findByCompanyId(int companyId) {
-        return responsiblePersonMapper.findByCompanyId(companyId);
+        return responsiblePersonMapper.findByCompanyId((long) companyId);
     }
 
     @Transactional
@@ -67,7 +69,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Override
     public int deleteById(int personId) {
-        return responsiblePersonMapper.deleteById(personId);
+        return responsiblePersonMapper.deleteById((long) personId);
     }
 
     @Override
@@ -75,6 +77,14 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
         PageHelper.startPage(responsiblePersonPageQueryDTO.getPageIndex(), responsiblePersonPageQueryDTO.getPageSize());
         Page<ResponsiblePerson> page = responsiblePersonMapper.selectByCriteria(responsiblePersonPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Transactional
+    @Override
+    public int deleteByUserId(int userId) {
+        ResponsiblePerson responsiblePerson = responsiblePersonMapper.findByUserId((long) userId);
+        userMapper.updateDeletedByUserId(userId);
+        return responsiblePersonMapper.deleteById(responsiblePerson.getPersonId());
     }
 
     @Transactional

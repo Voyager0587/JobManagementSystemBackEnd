@@ -2,6 +2,7 @@ package com.voyager.domain.pojo;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,12 +28,14 @@ public class Publish {
      * 发布时间
      */
     @Schema(description = "发布时间")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime publishTime;
 
     /**
      * 有效期
      */
     @Schema(description = "有效期")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime validTime;
 
     /**

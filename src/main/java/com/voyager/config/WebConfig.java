@@ -29,7 +29,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         registry.addInterceptor(loginInterceptor)
                 .excludePathPatterns("/captcha/graph-captcha","/api/user/register")//排除用户登录获取验证码接口
-                .excludePathPatterns("/","/login","*.html","/images/**","/doc.html","/api/user/login","/api/responsibleperson/login","/api/user/register"
+                .excludePathPatterns("/","/login","*.html","/images/**","/doc.html","/api/user/login","/api/responsibleperson/login","/api/user/register","/api/talent/login","/api/talent/register"
                         ,"/webjars/**","/swagger-resources","/swagger-resources/**","/v3/**")//排除登录获取静态资源、swagger接口文档等。
                 .order(1);//设置拦截器对所有路径生效,执行顺序为1
 

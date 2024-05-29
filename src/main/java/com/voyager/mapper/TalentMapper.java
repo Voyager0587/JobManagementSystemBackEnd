@@ -23,7 +23,7 @@ public interface TalentMapper {
      * @param userId 用户ID
      * @return 删除操作影响的行数
      */
-    @Delete("DELETE FROM User WHERE user_id = #{userId}")
+    @Delete("DELETE FROM job_portal.talent WHERE user_id = #{userId}")
     int deleteByIdNumber(int userId);
 
     /**
@@ -61,4 +61,7 @@ public interface TalentMapper {
 
     @Select("SELECT * FROM Talent WHERE phone_number = #{phone}")
     Talent findByPhone(String phone);
+
+    @Delete("DELETE FROM Talent WHERE user_id = #{userId}")
+    int deleteByUserId(int userId);
 }

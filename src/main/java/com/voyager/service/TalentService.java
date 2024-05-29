@@ -3,11 +3,10 @@ package com.voyager.service;
 import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.*;
 import com.voyager.domain.pojo.Talent;
-import com.voyager.domain.pojo.User;
 
 public interface TalentService {
     int insertTalent(Talent talent);
-    int deleteByIdNumber(int userId);
+    int deleteByUserId(int userId);
     int updateTalent(TalentUpdateDTO talentUpdateDTO);
     Talent findByIdNumber(String idNumber);
     Talent findByName(String name);
