@@ -157,13 +157,13 @@ public class ApplicationReviewController {
         return Result.success(applicationReviewService.pageQuery(applicationReviewPageQueryDTO));
     }
 
-    /**
-     * 获取待审核的申请信息
-     * @param jobId 职位ID
-     * @return {@link Map }<{@link String }, {@link Object }>
-     */
-    @GetMapping("/pendingReviews")
-    public Result<Map<String, Object>> getPendingReviews(@RequestParam int jobId) {
-        return Result.success(applicationReviewService.getPendingReviewsByJobId(jobId));
-    }
+//    /**
+//     * 获取待审核的申请信息
+//     * @param jobId 职位ID
+//     * @return {@link Map }<{@link String }, {@link Object }>
+//     */
+//    @GetMapping("/pendingReviews")
+//    public Result<Map<String, Object>> getPendingReviews(@RequestParam int jobId) {
+//        return Result.success(applicationReviewService.getPendingReviewsByJobId(jobId));
+//    }
 }

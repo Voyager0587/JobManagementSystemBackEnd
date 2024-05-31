@@ -82,10 +82,10 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
 
     }
 
-    @Override
-    public Map<String, Object> getPendingReviewsByJobId(int jobId) {
-        return applicationReviewMapper.countPendingReviewsBySpecificJob(jobId);
-    }
+//    @Override
+//    public Map<String, Object> getPendingReviewsByJobId(int jobId) {
+//        return applicationReviewMapper.countPendingReviewsBySpecificJob(jobId);
+//    }
 
     public int deleteByJobId(int jobId) {
         return applicationReviewMapper.deleteByJobId((long) jobId);

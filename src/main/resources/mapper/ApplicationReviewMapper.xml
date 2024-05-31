@@ -31,11 +31,10 @@
             </if>
         </where>
         order by apply_id desc
-
     </select>
-    <select id="countPendingReviewsBySpecificJob" parameterType="int" resultType="java.util.Map">
-        CALL CountPendingReviewsBySpecificJob(#{jobId})
-    </select>
+<!--    <select id="countPendingReviewsBySpecificJob" parameterType="int" resultType="java.util.Map">-->
+<!--        CALL CountPendingReviewsBySpecificJob(#{jobId,jdbcType=INTEGER})-->
+<!--    </select>-->
 
 </mapper>
 

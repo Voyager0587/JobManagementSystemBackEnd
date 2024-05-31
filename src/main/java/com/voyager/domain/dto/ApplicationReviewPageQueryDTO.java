@@ -30,9 +30,9 @@ public class ApplicationReviewPageQueryDTO {
     private Integer reviewStatus;
 
     /**
-     * 工作ID
+     * 岗位ID
      */
-    @Schema(description = "工作ID")
+    @Schema(description = "岗位ID")
     private Integer jobId;
 
     /**
