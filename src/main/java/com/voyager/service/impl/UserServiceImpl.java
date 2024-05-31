@@ -67,15 +67,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public int deleteByUserId(int userId) {
-        User user = userMapper.findByUserId((long) userId);
-        if (user.getUserType()=='1') {
-            return responsiblePersonService.deleteByUserId(userId);
-        }else if (user.getUserType()=='0') {
-            return talentService.deleteByUserId(userId);
-        }else {
-            //TODO 管理员的
-            return 0;
-        }
+        return userMapper.updateUserTypeByUserId((long) userId);
+        //改为使用触发器级联删除
+//        User user = userMapper.findByUserId((long) userId);
+//        if (user.getUserType()=='1') {
+//            return responsiblePersonService.deleteByUserId(userId);
+//        }else if (user.getUserType()=='0') {
+//            return talentService.deleteByUserId(userId);
+//        }else {
+//
+//            return 0;
+//        }
 
     }
 

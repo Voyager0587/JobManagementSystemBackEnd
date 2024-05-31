@@ -19,6 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Service
 public class TalentServiceImpl implements TalentService {
 
@@ -47,7 +49,7 @@ public class TalentServiceImpl implements TalentService {
         Talent talent = talentMapper.findByUserId((long) userId);
         applicationReviewMapper.deleteByIdNumber(talent.getIdNumber());
         educationMapper.deleteEducationByIdNumber(talent.getIdNumber());
-        userMapper.updateDeletedByUserId(userId);
+        userMapper.updateDeletedByUserId((long) userId);
         return talentMapper.deleteByUserId(userId);
     }
 
@@ -108,4 +110,6 @@ public class TalentServiceImpl implements TalentService {
         }
         return -1;
     }
+
+
 }

@@ -1,12 +1,12 @@
 package com.voyager.mapper;
 
 import com.github.pagehelper.Page;
-import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
 import com.voyager.domain.dto.ApplicationReviewQueryDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Mapper
@@ -90,6 +90,19 @@ public interface ApplicationReviewMapper {
     Page<ApplicationReview> selectByCriteria(ApplicationReviewQueryDTO applicationReviewQueryDTO
     );
 
+
+    /**
+     * 根据职位ID统计待审核的申请数量
+     *
+     * @param jobId 职位id
+     * @return {@link Map }<{@link String }, {@link Object }>
+     */
+    @Select("CALL CountPendingReviewsBySpecificJob(#{jobId})")
+    Map<String, Object> countPendingReviewsBySpecificJob(int jobId);
+    /**
+     * 根据身份证号删除申请信息
+     * @param idNumber 身份证号
+     */
     @Delete("DELETE FROM ApplicationReview WHERE id_number = #{idNumber}")
     void deleteByIdNumber(String idNumber);
 }

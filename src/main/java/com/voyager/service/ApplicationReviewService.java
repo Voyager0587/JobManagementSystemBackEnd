@@ -9,6 +9,7 @@ import com.voyager.domain.dto.ApplicationReviewUpdateDTO;
 import com.voyager.domain.pojo.ApplicationReview;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ApplicationReviewService {
     ApplicationReview findByApplyId(int applyId);
@@ -20,5 +21,5 @@ public interface ApplicationReviewService {
      int update(ApplicationReviewUpdateDTO applicationReviewUpdateDTO) ;
      int deleteByApplyId(int applyId);
     PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO);
-
+     Map<String, Object> getPendingReviewsByJobId(int jobId);
 }

@@ -54,4 +54,11 @@ public class JobRequirementServiceImpl implements JobRequirementService {
         Page<JobRequirement> page = jobRequirementMapper.selectByCriteria(jobRequirementPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
     }
+
+    @Transactional
+    @Override
+    public int deleteJobRequirementByJobId(int jobId) {
+        applicationReviewMapper.deleteByJobId((long) jobId);
+        return jobRequirementMapper.deleteJobRequirementsByJobId((long) jobId);
+    }
 }

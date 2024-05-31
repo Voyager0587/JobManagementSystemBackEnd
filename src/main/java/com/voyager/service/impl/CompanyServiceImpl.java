@@ -6,6 +6,7 @@ import com.github.pagehelper.PageHelper;
 import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.CompanyInsertDTO;
 import com.voyager.domain.dto.CompanyPageQueryDTO;
+import com.voyager.domain.dto.CompanyUpdateDTO;
 import com.voyager.domain.pojo.Company;
 import com.voyager.domain.pojo.JobRequirement;
 import com.voyager.domain.pojo.ResponsiblePerson;
@@ -79,5 +80,10 @@ public class CompanyServiceImpl implements CompanyService {
         PageHelper.startPage(companyPageQueryDTO.getPageIndex(), companyPageQueryDTO.getPageSize());
         Page<Company> page = companyMapper.selectByCriteria(companyPageQueryDTO);
         return new PageResult(page.getTotal(), page.getResult());
+    }
+
+    @Override
+    public int updateCompany(CompanyUpdateDTO companyUpdateDTO) {
+        return companyMapper.updateCompany(companyUpdateDTO);
     }
 }

@@ -2,6 +2,7 @@ package com.voyager.mapper;
 
 import com.github.pagehelper.Page;
 import com.voyager.domain.dto.CompanyPageQueryDTO;
+import com.voyager.domain.dto.CompanyUpdateDTO;
 import com.voyager.domain.pojo.Company;
 import org.apache.ibatis.annotations.*;
 
@@ -66,4 +67,12 @@ public interface CompanyMapper {
      */
     @Select("SELECT * FROM company WHERE company_id = #{companyId}")
     Company findCompanyByCompanyId(Long companyId);
+
+    /**
+     * 更新公司信息
+     * @param companyUpdateDTO 公司信息
+     * @return 更新操作影响的行数
+     */
+    @Update("UPDATE company SET company_name = #{companyName}, company_intro = #{companyIntro}, contact_name = #{contactName}, contact_phone = #{contactPhone}, email = #{email}, address = #{address}, website = #{website} WHERE company_id = #{companyId}")
+    int updateCompany(CompanyUpdateDTO companyUpdateDTO);
 }

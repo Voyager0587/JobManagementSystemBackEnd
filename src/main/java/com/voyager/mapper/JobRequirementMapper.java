@@ -63,4 +63,7 @@ public interface JobRequirementMapper {
 
     @Select("SELECT * FROM jobrequirement WHERE company_id = #{companyId}")
     List<JobRequirement> findJobRequirementByCompanyId(Long companyId);
+
+    @Delete("DELETE FROM jobrequirement WHERE job_id = #{jobId}")
+    int deleteJobRequirementsByJobId(long jobId);
 }

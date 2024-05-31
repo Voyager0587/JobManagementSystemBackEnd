@@ -5,6 +5,7 @@ import com.voyager.common.result.Result;
 import com.voyager.domain.dto.CompanyDeleteDTO;
 import com.voyager.domain.dto.CompanyInsertDTO;
 import com.voyager.domain.dto.CompanyPageQueryDTO;
+import com.voyager.domain.dto.CompanyUpdateDTO;
 import com.voyager.domain.pojo.Company;
 import com.voyager.service.CompanyService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -86,6 +87,20 @@ public class CompanyController {
             return Result.success("联系人信息更新成功");
         }
         return Result.error("联系人信息更新失败");
+    }
+
+    /**
+     *  更新公司信息
+     * @param companyUpdateDTO
+     * @return {@link Result }<{@link String }>
+     */
+    @PostMapping("/update")
+    @Operation(summary = "更新公司信息")
+    public Result<String> updateCompany(@RequestBody CompanyUpdateDTO companyUpdateDTO) {
+        if (companyService.updateCompany(companyUpdateDTO) >= 1) {
+            return Result.success("公司信息更新成功");
+        }
+        return Result.error("公司信息更新失败");
     }
 
     /**

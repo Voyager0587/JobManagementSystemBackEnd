@@ -4,6 +4,8 @@ import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.*;
 import com.voyager.domain.pojo.Talent;
 
+import java.util.Map;
+
 public interface TalentService {
     int insertTalent(Talent talent);
     int deleteByUserId(int userId);
@@ -16,4 +18,6 @@ public interface TalentService {
     Talent login(PersonLoginDTO personLoginDTO);
 
     int insert(TalentRegisterDTO talentRegisterDTO);
+
+
 }

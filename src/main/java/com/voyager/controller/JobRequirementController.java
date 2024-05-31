@@ -56,6 +56,24 @@ public class JobRequirementController {
     }
 
     /**
+     * 根据职位ID删除JobRequirement记录
+     *
+     * @param jobId   职位Id
+     * @return 包装删除操作影响的行数的Result对象
+     */
+    @Operation(summary = "根据职位ID删除JobRequirement记录")
+    @PostMapping("/deleteByJobId")
+    @Parameter(description = "职位名称")
+    @Parameter(description = "公司ID")
+    public Result<String> deleteJobRequirementByNameAndCompanyId(@RequestParam int jobId) {
+        if (jobRequirementService.deleteJobRequirementByJobId(jobId) == 1) {
+            return Result.success("删除成功");
+        }
+        return Result.error("删除失败");
+    }
+
+
+    /**
      * 根据职位名称和公司ID查询JobRequirement记录
      *
      * @param jobName   职位名称
@@ -70,6 +88,7 @@ public class JobRequirementController {
         JobRequirement jobRequirement = jobRequirementService.findJobRequirementByNameAndCompanyId(jobName, companyId);
         return Result.success(jobRequirement);
     }
+
 
     /**
      * 更新JobRequirement的number_required字段

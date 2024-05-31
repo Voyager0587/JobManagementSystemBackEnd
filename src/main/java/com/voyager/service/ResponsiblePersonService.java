@@ -18,6 +18,6 @@ public interface ResponsiblePersonService {
     int update(ResponsiblePerson responsiblePerson);
     int deleteById(int personId);
     PageResult pageQuery(ResponsiblePersonPageQueryDTO responsiblePersonPageQueryDTO);
-    int deleteByUserId(int userId);
+    int deleteByUserId(Long userId);
     ResponsiblePerson login(PersonLoginDTO personLoginDTO);
 }

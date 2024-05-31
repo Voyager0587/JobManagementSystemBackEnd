@@ -44,11 +44,11 @@ public interface UserMapper {
 
     /**
      * 更新User记录
-     * @param user User对象，包含需要更新的数据
+     * @param userId 用户ID
      * @return int
      */
     @Update("UPDATE User SET user_type = #{userType} WHERE user_id = #{userId}")
-    int updateUserTypeByUserId(User user);
+    int updateUserTypeByUserId(Long userId);
     /**
      * 根据用户ID删除User记录
      * @param userId 用户ID
@@ -65,5 +65,5 @@ public interface UserMapper {
     Page<User> selectByCriteria(UserPageQueryDTO userPageQueryDTO);
 
     @Update("UPDATE User SET deleted = 1 WHERE user_id = #{userId}")
-    int updateDeletedByUserId(int userId);
+    int updateDeletedByUserId(Long userId);
 }

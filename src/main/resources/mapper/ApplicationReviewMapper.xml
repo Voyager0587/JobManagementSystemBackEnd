@@ -13,12 +13,10 @@
             <if test="reviewStatus != null">
                 review_status = #{reviewStatus},
             </if>
-            <if test="reviewTime != null">
-                review_time = #{reviewTime},
-            </if>
         </set>
         WHERE apply_id = #{applyId}
     </update>
+
     <select id="selectByCriteria" resultType="com.voyager.domain.pojo.ApplicationReview">
         SELECT * FROM ApplicationReview
         <where>
@@ -35,5 +33,9 @@
         order by apply_id desc
 
     </select>
+    <select id="countPendingReviewsBySpecificJob" parameterType="int" resultType="java.util.Map">
+        CALL CountPendingReviewsBySpecificJob(#{jobId})
+    </select>
+
 </mapper>
 

@@ -12,6 +12,7 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 根据personId查询ResponsiblePerson记录
+     *
      * @param personId 负责人ID
      * @return 对应的ResponsiblePerson对象
      */
@@ -20,6 +21,7 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 根据userId查询ResponsiblePerson记录
+     *
      * @param userId 用户ID
      * @return 对应的ResponsiblePerson对象
      */
@@ -28,6 +30,7 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 根据companyId查询所有ResponsiblePerson记录
+     *
      * @param companyId 公司ID
      * @return 对应的ResponsiblePerson对象列表
      */
@@ -36,6 +39,7 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 插入新的ResponsiblePerson记录
+     *
      * @param responsiblePerson ResponsiblePerson对象，包含需要插入的数据
      * @return 插入操作影响的行数
      */
@@ -45,14 +49,16 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 更新ResponsiblePerson记录
+     *
      * @param responsiblePerson ResponsiblePerson对象，包含需要更新的数据
      * @return 更新操作影响的行数
      */
-    @Update("UPDATE responsibleperson SET user_id = #{userId}, name = #{name}, phone_number = #{phoneNumber}, email = #{email}, company_id = #{companyId} WHERE person_id = #{personId}")
+    @Update("UPDATE responsibleperson SET name = #{name}, phone_number = #{phoneNumber}, email = #{email}, company_id = #{companyId} WHERE user_id = #{userId}")
     int update(ResponsiblePerson responsiblePerson);
 
     /**
      * 根据personId删除ResponsiblePerson记录
+     *
      * @param personId 负责人ID
      * @return 删除操作影响的行数
      */
@@ -61,6 +67,7 @@ public interface ResponsiblePersonMapper {
 
     /**
      * 根据条件查询ResponsiblePerson记录
+     *
      * @param responsiblePersonPageQueryDTO 查询条件
      * @return {@link Page }<{@link ResponsiblePerson }>
      */

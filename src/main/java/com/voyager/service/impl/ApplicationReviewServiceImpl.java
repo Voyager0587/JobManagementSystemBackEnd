@@ -3,7 +3,6 @@ package com.voyager.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
 import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.ApplicationReviewDTO;
 import com.voyager.domain.dto.ApplicationReviewPageQueryDTO;
@@ -20,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ApplicationReviewServiceImpl implements ApplicationReviewService {
@@ -58,12 +58,13 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
     public int update(ApplicationReviewUpdateDTO applicationReviewUpdateDTO) {
         ApplicationReview applicationReview = new ApplicationReview();
         BeanUtil.copyProperties(applicationReviewUpdateDTO, applicationReview);
-        applicationReview.setReviewTime(LocalDateTime.now());
-         return applicationReviewMapper.update(applicationReview);
+        // 改为使用触发器自动填充
+        // applicationReview.setReviewTime(LocalDateTime.now());
+        return applicationReviewMapper.update(applicationReview);
     }
 
     public int deleteByApplyId(int applyId) {
-         return applicationReviewMapper.deleteByApplyId(applyId);
+        return applicationReviewMapper.deleteByApplyId(applyId);
     }
 
     @Transactional
@@ -72,7 +73,7 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
         Talent talent = talentMapper.findByUserId(applicationReviewPageQueryDTO.getUserId());
         ApplicationReviewQueryDTO applicationReviewQueryDTO = new ApplicationReviewQueryDTO();
         BeanUtil.copyProperties(applicationReviewPageQueryDTO, applicationReviewQueryDTO);
-        if (talent != null){
+        if (talent != null) {
             applicationReviewQueryDTO.setIdNumber(talent.getIdNumber());
         }
         PageHelper.startPage(applicationReviewQueryDTO.getPageIndex(), applicationReviewQueryDTO.getPageSize());
@@ -81,7 +82,12 @@ public class ApplicationReviewServiceImpl implements ApplicationReviewService {
 
     }
 
+    @Override
+    public Map<String, Object> getPendingReviewsByJobId(int jobId) {
+        return applicationReviewMapper.countPendingReviewsBySpecificJob(jobId);
+    }
+
     public int deleteByJobId(int jobId) {
-         return applicationReviewMapper.deleteByJobId((long) jobId);
+        return applicationReviewMapper.deleteByJobId((long) jobId);
     }
 }

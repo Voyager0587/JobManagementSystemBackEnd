@@ -7,13 +7,10 @@ import com.voyager.common.result.PageResult;
 import com.voyager.domain.dto.PersonLoginDTO;
 import com.voyager.domain.dto.ResponsiblePersonPageQueryDTO;
 import com.voyager.domain.dto.ResponsiblePersonRegisterDTO;
-import com.voyager.domain.pojo.Company;
 import com.voyager.domain.pojo.ResponsiblePerson;
 import com.voyager.domain.pojo.User;
-import com.voyager.mapper.CompanyMapper;
 import com.voyager.mapper.ResponsiblePersonMapper;
 import com.voyager.mapper.UserMapper;
-import com.voyager.service.CompanyService;
 import com.voyager.service.ResponsiblePersonService;
 import com.voyager.utills.UserHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +28,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Autowired
     private UserMapper userMapper;
-    @Autowired
-    private CompanyService companyService;
-    @Autowired
-    private CompanyMapper companyMapper;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -69,7 +63,8 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Override
     public int deleteById(int personId) {
-        return responsiblePersonMapper.deleteById((long) personId);
+        ResponsiblePerson person = responsiblePersonMapper.findById(personId);
+        return deleteByUserId(person.getUserId());
     }
 
     @Override
@@ -81,7 +76,7 @@ public class ResponsiblePersonServiceImpl implements ResponsiblePersonService {
 
     @Transactional
     @Override
-    public int deleteByUserId(int userId) {
+    public int deleteByUserId(Long userId) {
         ResponsiblePerson responsiblePerson = responsiblePersonMapper.findByUserId((long) userId);
         userMapper.updateDeletedByUserId(userId);
         return responsiblePersonMapper.deleteById(responsiblePerson.getPersonId());

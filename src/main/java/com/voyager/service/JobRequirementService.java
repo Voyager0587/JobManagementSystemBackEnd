@@ -12,4 +12,6 @@ public interface JobRequirementService {
     int updateJobRequirementNumberRequired(String jobName, int companyId, int numberRequired);
     int updateJobRequirementDescription(String jobName, int companyId, String jobDescription);
     PageResult pageQuery(JobRequirementPageQueryDTO jobRequirementPageQueryDTO);
+
+    int deleteJobRequirementByJobId(int jobId);
 }
