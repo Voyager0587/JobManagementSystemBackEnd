@@ -162,8 +162,8 @@ public class ApplicationReviewController {
      * @param jobId 职位ID
      * @return {@link Map }<{@link String }, {@link Object }>
      */
-    @GetMapping("/pendingReviews")
-    public Result<Map<String, Object>> getPendingReviews(@RequestParam int jobId) {
-        return Result.success(applicationReviewService.getPendingReviewsByJobId(jobId));
-    }
+//    @GetMapping("/pendingReviews")
+//    public Result<Map<String, Object>> getPendingReviews(@RequestParam int jobId) {
+//        return Result.success(applicationReviewService.getPendingReviewsByJobId(jobId));
+//    }
 }

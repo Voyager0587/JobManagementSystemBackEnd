@@ -90,15 +90,15 @@ public interface ApplicationReviewMapper {
     Page<ApplicationReview> selectByCriteria(ApplicationReviewQueryDTO applicationReviewQueryDTO
     );
 
-
-    /**
-     * 根据职位ID统计待审核的申请数量
-     *
-     * @param jobId 职位id
-     * @return {@link Map }<{@link String }, {@link Object }>
-     */
-    @Select("CALL CountPendingReviewsBySpecificJob(#{jobId})")
-    Map<String, Object> countPendingReviewsBySpecificJob(int jobId);
+//
+//    /**
+//     * 根据职位ID统计待审核的申请数量
+//     *
+//     * @param jobId 职位id
+//     * @return {@link Map }<{@link String }, {@link Object }>
+//     */
+//    @Select("CALL CountPendingReviewsBySpecificJob(#{jobId})")
+//    Map<String, Object> countPendingReviewsBySpecificJob(int jobId);
     /**
      * 根据身份证号删除申请信息
      * @param idNumber 身份证号

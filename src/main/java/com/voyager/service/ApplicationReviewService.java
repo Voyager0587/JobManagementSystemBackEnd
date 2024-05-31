@@ -21,5 +21,5 @@ public interface ApplicationReviewService {
      int update(ApplicationReviewUpdateDTO applicationReviewUpdateDTO) ;
      int deleteByApplyId(int applyId);
     PageResult pageQuery(ApplicationReviewPageQueryDTO applicationReviewPageQueryDTO);
-     Map<String, Object> getPendingReviewsByJobId(int jobId);
+//     Map<String, Object> getPendingReviewsByJobId(int jobId);
 }
