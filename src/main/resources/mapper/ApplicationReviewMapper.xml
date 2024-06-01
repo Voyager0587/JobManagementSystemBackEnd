@@ -29,6 +29,7 @@
             <if test="idNumber != null and idNumber != ''">
                 AND id_number = #{idNumber}
             </if>
+
         </where>
         order by apply_id desc
     </select>

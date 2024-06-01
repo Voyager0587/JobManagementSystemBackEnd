@@ -24,11 +24,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * 负责人接口
- * @author Voyager
- * @date 2024/05/25
- */
+
 @Tag(name = "负责人接口")
 @RestController
 @RequestMapping("/api/responsibleperson")

@@ -54,7 +54,6 @@ public interface ApplicationReviewMapper {
      */
     @Insert("INSERT INTO ApplicationReview(application_time, review_time, review_result, review_status, id_number, job_id) " +
             "VALUES(#{applicationTime}, #{reviewTime}, #{reviewResult}, #{reviewStatus}, #{idNumber}, #{jobId})")
-    @Options(useGeneratedKeys = true, keyProperty = "applyId")
     int insert(ApplicationReview applicationReview);
 
     /**
@@ -79,6 +78,11 @@ public interface ApplicationReviewMapper {
      */
     @Delete("DELETE FROM ApplicationReview WHERE job_id = #{jobId}")
     int deleteByJobId(Long jobId);
+
+
+    @Select("SELECT COUNT(*) FROM applicationreview WHERE review_status = 1")
+    int countPendingReviews();
+
 
 
     /**

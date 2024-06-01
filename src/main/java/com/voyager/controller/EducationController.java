@@ -12,12 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 学历信息接口
- *
- * @author Voyager
- * @date 2024/05/29
- */
+
 @RestController
 @RequestMapping("/api/education")
 public class EducationController {

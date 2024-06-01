@@ -22,12 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-/**
- * 用户接口
- *
- * @author Voyager
- * @date 2024/05/25
- */
+
 @Tag(name = "用户接口")
 @RestController
 @RequestMapping("/api/user")

@@ -11,12 +11,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 职位需求接口
- *
- * @author Voyager
- * @date 2024/05/25
- */
+
 @Tag(name = "职位需求接口")
 @RestController
 @RequestMapping("/api/jobrequirement")

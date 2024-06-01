@@ -13,12 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-/**
- * 发布接口
- *
- * @author Voyager
- * @date 2024/05/25
- */
+
 @Tag(name = "发布接口")
 @RestController
 @RequestMapping("/api/publish")

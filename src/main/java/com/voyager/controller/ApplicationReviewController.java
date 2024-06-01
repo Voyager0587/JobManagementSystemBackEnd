@@ -17,12 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
-/**
- * 申请审核接口
- *
- * @author Voyager
- * @date 2024/05/25
- */
+
 @Tag(name = "申请审核接口")
 @RestController
 @RequestMapping("/api/application-review")
